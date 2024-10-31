@@ -11,6 +11,10 @@ import connectDB from "./utils/db.js";
 import userRoute from "./routes/userRoutes.js";
 import authRoute from "./routes/authRoutes.js";
 import courseRoute from "./routes/courseRoutes.js";
+import reviewRoute from "./routes/reviewRoutes.js";
+import assignmentRoute from "./routes/assignmentRoutes.js";
+import progressRoute from "./routes/progressRoutes.js";
+import cartRoute from "./routes/cartRoutes.js";
 
 dotenv.config();
 
@@ -44,6 +48,10 @@ const port = process.env.PORT || 5000;
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/auth",authRoute);
 app.use("/api/v1/course",courseRoute);
+app.use("/api/v1/review",reviewRoute);
+app.use("/api/v1/assignment",assignmentRoute);
+app.use("/api/v1/progress",progressRoute);
+app.use("/api/v1/cart",cartRoute);
 
 app.listen(port,async () => {
     await connectDB();
