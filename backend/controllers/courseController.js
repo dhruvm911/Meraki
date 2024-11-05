@@ -1,5 +1,5 @@
-import { Course } from "../models/courseSchema";
-import { User } from "../models/userSchema";
+import { Course } from "../models/courseSchema.js";
+import { User } from "../models/userSchema.js";
 import { validationResult } from "express-validator";
 
 export const createCourse = async (req, res) => {
@@ -44,12 +44,13 @@ export const getAllCourses = async (req, res) => {
 };
 
 export const getCourseById = async (req, res) => {
-    const { id } = req.params; // Extract the course ID from request parameters
+    const { courseId } = req.params; // Extract the course ID from request parameters
 
     try {
         // Retrieve the course by ID
-        const course = await Course.findById(id).populate('instructor', 'fullName email'); // Populating instructor details
+        const course = await Course.findById(courseId).populate('instructor', 'fullName email'); // Populating instructor details
 
+        
         // Check if the course exists
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
@@ -63,12 +64,12 @@ export const getCourseById = async (req, res) => {
 };
 
 export const updateCourse = async (req, res) => {
-    const { id } = req.params; // Extract the course ID from request parameters
+    const { courseId } = req.params; // Extract the course ID from request parameters
 
     try {
         // Find the course by ID and update only the provided fields
-        const updatedCourse = await Course.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
-
+        const updatedCourse = await Course.findByIdAndUpdate(courseId, req.body, { new: true, runValidators: true });
+        console.log(req.params);
         // Check if the course exists
         if (!updatedCourse) {
             return res.status(404).json({ message: 'Course not found' });
