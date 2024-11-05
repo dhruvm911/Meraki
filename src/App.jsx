@@ -11,6 +11,7 @@ import Footer from './components/Footer'
 import LoginForm from './components/LoginForm'
 import LoginTwo from './components/LoginTwo';
 import AboutUs from './components/AboutUs';
+import SignUp from './components/Signup';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
       <Featured/>
       <Cards/>
       <Footer/>
-      
+      <SignUp/>
   
       </>
           } />
@@ -37,6 +38,7 @@ function App() {
 <Route path="/login" element={<LoginForm />} />
 <Route path="/loginTwo" element={<LoginTwo />} /> {/* For Instructor */}
 <Route path="/footer" element={<Footer />} />
+<Route path="/signup" element={<SignUp />} />
         </Routes>
       </div>
     </Router>

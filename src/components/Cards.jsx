@@ -15,14 +15,21 @@ function Cards() {
 
         </div>
         </div>
-        <div className="cardcontainer flex gap-5 w-1/2 h-[50vh]">
-        <div className="card w-1/2 relative h-full items-center flex justify-center rounded-xl bg-[#192826]">
-        <p className="text-white text-lg font-semibold"> 4.7/5 on Trustpilot </p>
-        <FaStar /></div>
-        <div className="card w-1/2 relative h-full rounded-xl flex items-center justify-center  bg-[#004D43]">
-         <p className="text-white text-lg font-semibold">4.8/5 on PloyrGuild</p>
-        <FaStar /></div>
-        </div>
+        <div className="cardcontainer flex gap-6 w-1/2 h-[50vh] p-4">
+      {/* Trustpilot Card */}
+      <div className="card w-1/2 h-full flex flex-col items-center justify-center rounded-xl bg-[#192826] p-6">
+        <p className="text-white text-2xl font-semibold mb-1">4.7/5</p>
+        <FaStar className="text-yellow-400 text-2xl mb-1" />
+        <p className="text-white text-lg font-medium">Trustpilot</p>
+      </div>
+
+      {/* PloyrGuild Card */}
+      <div className="card w-1/2 h-full flex flex-col items-center justify-center rounded-xl bg-[#004D43] p-6">
+        <p className="text-white text-2xl font-semibold mb-1">4.8/5</p>
+        <FaStar className="text-yellow-400 text-2xl mb-1" />
+        <p className="text-white text-lg font-medium">PloyrGuild</p>
+      </div>
+    </div>
         </div>
   )
 }

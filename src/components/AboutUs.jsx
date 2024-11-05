@@ -16,9 +16,11 @@ const AboutUs = () => {
             About <span className="text-indigo-600">Our Company</span>
           </h2>
           <p className="text-gray-400">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, commodi
-            doloremque, fugiat illum magni minus nisi nulla numquam obcaecati placeat quia, repellat tempore
-            voluptatum.
+          Welcome to Meraki – your destination for online learning, where passion meets purpose. At Meraki, we believe in the power of knowledge to transform lives and empower individuals to pursue their goals with confidence. Our platform offers a wide range of courses across various disciplines, designed and taught by experienced instructors who bring expertise and a love for teaching.
+
+Meraki is more than just a learning website; it's a community of students and educators dedicated to personal growth, skill development, and lifelong learning. Whether you're looking to kickstart a new career, hone your existing skills, or explore a new hobby, Meraki is here to support your journey. With flexible, on-demand courses, you can learn at your own pace, anytime and anywhere.
+
+Dive into our library of courses, connect with expert instructors, and start learning today.
           </p>
         </div>
       </div>

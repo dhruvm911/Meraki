@@ -1,5 +1,6 @@
 import React from "react";
 import { TEInput, TERipple } from "tw-elements-react";
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
   return (
@@ -73,8 +74,11 @@ export default function LoginForm() {
 
             {/* Sign Up Link */}
             <div className="text-center">
-              <p className="text-sm">Don't have an account? <a href="#" className="text-primary hover:underline">Sign up</a></p>
-            </div>
+  <p className="text-sm">
+    Don't have an account? 
+    <Link to="/signup" className="text-primary hover:underline">Sign up</Link>
+  </p>
+</div>
           </form>
         </div>
       </div>
