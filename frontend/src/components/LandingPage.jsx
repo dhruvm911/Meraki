@@ -33,13 +33,14 @@ function LandingPage() {
         
         {/* Start Button */}
         <div className="start flex items-center gap-2 mt-4 md:mt-0">
-          <div className="px-3 py-2 md:px-4 md:py-2 border-[2px] border-zinc-500 font-light text-sm md:text-md capitalize rounded-full">
-            Let's begin
-          </div>
-          <div className='w-6 h-6 md:w-7 md:h-7 px-1 py-1 border-[2px] border-zinc-500 rounded-full flex items-center justify-center'>
-            <FaLocationArrow />
-          </div>
-        </div>
+  <a href="/signup" className="px-3 py-2 md:px-4 md:py-2 border-[2px] border-zinc-500 font-light text-sm md:text-md capitalize rounded-full">
+    Let's begin
+  </a>
+  <div className="w-6 h-6 md:w-7 md:h-7 px-1 py-1 border-[2px] border-zinc-500 rounded-full flex items-center justify-center">
+    <FaLocationArrow />
+  </div>
+</div>
+
       </div>
     </div>
   );
