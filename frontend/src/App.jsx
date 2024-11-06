@@ -29,14 +29,14 @@ function App() {
       <Featured/>
       <Cards/>
       <Footer/>
-      <SignUp/>
+      
   
       </>
           } />
 ginT
 <Route path="/about-us" element={<AboutUs />} /> {/* About Us Route */}
 <Route path="/login" element={<LoginForm />} />
-<Route path="/lowo" element={<LoginTwo />} /> {/* For Instructor */}
+<Route path="/loginTwo" element={<LoginTwo />} /> {/* For Instructor */}
 <Route path="/footer" element={<Footer />} />
 <Route path="/signup" element={<SignUp />} />
         </Routes>

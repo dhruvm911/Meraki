@@ -7,9 +7,12 @@ function About() {
       <div className='w-full flex gap-5 border-t-[1px] border-[#a1b562] pt-10 mt-20'>
        <div className='w-1/2'>
        <h1 className='text-7xl'>Our Misson:</h1>
-       <button className='px-10 uppercase flex gap-10 item-center py-6 mt-10 bg-zinc-900 rounded-full text-white'>Read More
-        <div className=" mt-2 w-2 h-2 bg-zinc-100 rounded-full"></div>
-        </button></div>
+       <a href="/about-us">
+  <button className="px-10 uppercase flex gap-10 items-center py-6 mt-10 bg-zinc-900 rounded-full text-white">
+    Read More
+    <div className="mt-2 w-2 h-2 bg-zinc-100 rounded-full"></div>
+  </button>
+</a></div>
         <div className='w-1/2 h-[60vh] rounded-3xl bg-[#b9d849]'>
         <picture className="w-full">
         <img 
