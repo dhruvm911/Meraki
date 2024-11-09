@@ -17,6 +17,8 @@ export default passport.use(new GoogleStrategy({
     if (existingUser) {
         return done(null, existingUser);
     }
+
+    const role = profile._json.session?.role || 'student';
     const newUser = await new User({
         fullName: profile.displayName,
         email: profile.emails[0].value,
