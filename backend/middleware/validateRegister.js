@@ -12,5 +12,5 @@ export const validateRegister = [
         .matches(/\d/).withMessage('Password must contain at least one number')
         .matches(/[\W_]/).withMessage('Password must contain at least one special character'),
     body('role')
-        .isIn(['student', 'teacher']).withMessage('Role must be either "student" or "teacher"')
+        .isIn(['student', 'instructor']).withMessage('Role must be either "student" or "instructor"')
 ];

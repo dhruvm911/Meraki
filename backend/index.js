@@ -5,7 +5,7 @@ import session from 'express-session';
 import passport from 'passport';
 import helmet from "helmet";
 import morgan from "morgan";
-import "./strategies/googleStrategy.js"
+import "./strategies/googleStrategy.js";
 // import "./strategies/facebookStrategy.js"
 import connectDB from "./utils/db.js";
 import userRoute from "./routes/userRoutes.js";
@@ -15,6 +15,7 @@ import reviewRoute from "./routes/reviewRoutes.js";
 import assignmentRoute from "./routes/assignmentRoutes.js";
 import progressRoute from "./routes/progressRoutes.js";
 import cartRoute from "./routes/cartRoutes.js";
+import uploadRoutes from "./routes/uploads.js";
 
 dotenv.config();
 
@@ -52,6 +53,7 @@ app.use("/api/v1/review",reviewRoute);
 app.use("/api/v1/assignment",assignmentRoute);
 app.use("/api/v1/progress",progressRoute);
 app.use("/api/v1/cart",cartRoute);
+app.use("/api/v1", uploadRoutes);
 
 app.listen(port,async () => {
     await connectDB();

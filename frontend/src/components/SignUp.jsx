@@ -1,7 +1,74 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
+
 export default function SignUpForm() {
   const [userType, setUserType] = useState("student");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [fullName, setFullName] = useState("");
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5000/api/v1/auth/google";
+  };
+
+  const navigate = useNavigate(); 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Simple validation
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      return;
+    }
+
+    // Step 2: Send form data to the backend
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: fullName,
+          email,
+          password,
+          role: userType,
+        }),
+      });
+
+      const data = await response.json();
+
+      
+      
+      if (response.ok) {
+        alert("Registration successful!");
+        // Redirect or update UI as needed
+
+        // Redirect based on user role
+        if (userType === "student") {
+          navigate("/login");  // Assuming LoginForm is at "/login"
+        } else if (userType === "instructor") {
+          navigate("/loginTwo");  // Assuming LoginTwo is at "/login-two"
+        }
+      } else {
+        if (data.errors) {
+          // Extracting all the `msg` properties from the errors array
+          const errorMessages = data.errors.map(error => error.msg).join(", ");
+          setErrorMessage(errorMessages);
+        } else {
+          setErrorMessage(data.message || "An error occurred during registration.");
+        }
+        
+      }
+    } catch (error) {
+      setErrorMessage("Failed to register. Please try again.");
+    }
+  };
+
 
   return (
     <section className="min-h-screen pt-24 bg-dark text-white">
@@ -18,7 +85,7 @@ export default function SignUpForm() {
 
         {/* Form Section */}
         <div className="w-full lg:w-1/2 flex justify-center items-center p-4">
-          <form className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm"> {/* Reduced max width */}
+          <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm"> {/* Reduced max width */}
             
             {/* Social Sign Up */}
             <div className="flex flex-row items-center justify-center lg:justify-start mb-4">
@@ -51,7 +118,8 @@ export default function SignUpForm() {
             <div className="relative mb-4">
               <TEInput
                 type="text"
-                placeholder="Username"
+                placeholder="Full Name"
+                value={fullName} onChange={(e) => setFullName(e.target.value)}
                 size="lg"
                 className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
               />
@@ -61,6 +129,7 @@ export default function SignUpForm() {
               <TEInput
                 type="email"
                 placeholder="Email address"
+                value={email} onChange={(e) => setEmail(e.target.value)}
                 size="lg"
                 className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
               />
@@ -70,6 +139,7 @@ export default function SignUpForm() {
               <TEInput
                 type="password"
                 placeholder="Password"
+                value={password} onChange={(e) => setPassword(e.target.value)}
                 size="lg"
                 className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
               />
@@ -79,6 +149,7 @@ export default function SignUpForm() {
               <TEInput
                 type="password"
                 placeholder="Confirm Password"
+                value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
                 size="lg"
                 className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
               />
@@ -113,10 +184,23 @@ export default function SignUpForm() {
               </div>
             </div>
 
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
             {/* Sign Up Button */}
             <button type="submit" className="w-full py-2 mb-4 bg-primary hover:bg-primary-dark text-white rounded-lg font-semibold">
               Sign up
             </button>
+
+            {/* Google Login Button */}
+        <TERipple rippleColor="light">
+          <button
+            type="button"
+            className="mx-1 h-8 w-8 rounded-full bg-red-500 flex items-center justify-center text-white"
+            onClick={handleGoogleLogin}
+          >
+            G
+          </button>
+        </TERipple>
 
             {/* Login Link */}
            

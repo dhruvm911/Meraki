@@ -1,4 +1,5 @@
 import express from "express";
+import upload from "../middleware/multer.js";
 import { 
     logoutUser, 
     getEnrolledCourses, 
@@ -28,10 +29,10 @@ router.get('/enrolled-courses', authMiddleware, roleMiddleware('student'), getEn
 // Route to get the user profile (for authenticated users)
 router.get('/profile', authMiddleware, getUserProfile);
 
-// Route to get created courses (for teachers only)
-router.get('/created-courses', authMiddleware, roleMiddleware('teacher'), getCreatedCourses);
+// Route to get created courses (for instructors only)
+router.get('/created-courses', authMiddleware, roleMiddleware('instructor'), getCreatedCourses);
 
 // Route to update user profile (for authenticated users)
-router.put('/update-profile', authMiddleware, updateUserProfile);
+router.put('/update-profile', authMiddleware, upload.single('file'), updateUserProfile);
 
 export default router;

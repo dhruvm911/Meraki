@@ -43,6 +43,45 @@ export const getAllCourses = async (req, res) => {
     }
 };
 
+export const searchCourses = async (req, res) => {
+    const { query } = req.query; // Extract the query parameter from the request
+
+    try {
+        if (!query) {
+            return res.status(400).json({ message: 'Query parameter is required' });
+        }
+
+        const regex = new RegExp(query, 'i'); // Case-insensitive regex for matching
+
+        // Fetch courses and populate instructor details
+        const courses = await Course.find({
+            $or: [
+                { title: regex },
+                { category: regex },
+                { 'instructor.fullName': regex }
+            ]
+        }).populate('instructor', 'fullName email');
+
+        // Filter courses where instructor's full name matches the query
+        const filteredCourses = courses.filter(course =>
+            course.instructor.fullName.match(regex)
+        );
+
+        // Combine results: match from title/category + filtered instructors
+        const uniqueCourses = [...new Set([...courses, ...filteredCourses])];
+
+        if (uniqueCourses.length === 0) {
+            return res.status(200).json({ message: 'No courses found', courses: [] });
+        }
+
+        res.status(200).json({ courses: uniqueCourses });
+    } catch (error) {
+        res.status(500).json({ message: 'Error searching courses', error: error.message });
+    }
+};
+
+
+
 export const getCourseById = async (req, res) => {
     const { courseId } = req.params; // Extract the course ID from request parameters
 
@@ -63,24 +102,50 @@ export const getCourseById = async (req, res) => {
     }
 };
 
+// export const updateCourse = async (req, res) => {
+//     const { courseId } = req.params; // Extract the course ID from request parameters
+
+//     try {
+//         // Find the course by ID and update only the provided fields
+//         const updatedCourse = await Course.findByIdAndUpdate(courseId, req.body, { new: true, runValidators: true });
+//         console.log(req.params);
+//         // Check if the course exists
+//         if (!updatedCourse) {
+//             return res.status(404).json({ message: 'Course not found' });
+//         }
+
+//         // Send the updated course back to the client
+//         res.status(200).json({ course: updatedCourse });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error updating course', error: error.message });
+//     }
+// };
+
 export const updateCourse = async (req, res) => {
-    const { courseId } = req.params; // Extract the course ID from request parameters
+    const { courseId } = req.params;
+    console.log("Request Body:", req.body);
+
+    const { title, description, price, category } = req.body;
 
     try {
-        // Find the course by ID and update only the provided fields
-        const updatedCourse = await Course.findByIdAndUpdate(courseId, req.body, { new: true, runValidators: true });
-        console.log(req.params);
-        // Check if the course exists
+        const updatedCourse = await Course.findByIdAndUpdate(courseId, {
+            title,
+            description,
+            price,
+            category,
+        }, { new: true });
+
         if (!updatedCourse) {
             return res.status(404).json({ message: 'Course not found' });
         }
 
-        // Send the updated course back to the client
         res.status(200).json({ course: updatedCourse });
     } catch (error) {
+        console.error("Error updating course:", error);
         res.status(500).json({ message: 'Error updating course', error: error.message });
     }
 };
+
 
 export const deleteCourse = async (req, res) => {
     const { id } = req.params; // Extract the course ID from request parameters

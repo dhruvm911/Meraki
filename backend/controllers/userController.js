@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { validationResult } from 'express-validator';
 import { User } from '../models/userSchema.js';
 import { Course } from '../models/courseSchema.js';
+import cloudinary from '../utils/cloudinary.js';
 
 export const registerUser = async (req, res) => {
     // Validation checks
@@ -120,8 +121,8 @@ export const getUserProfile = async (req, res) => {
 };
 
 export const getCreatedCourses = async (req, res) => {
-    if (req.user.role !== 'teacher') {
-        return res.status(403).json({ message: 'Only teachers can create and view their own courses' });
+    if (req.user.role !== 'instructor') {
+        return res.status(403).json({ message: 'Only instructors can create and view their own courses' });
     }
 
     try {
@@ -135,21 +136,31 @@ export const getCreatedCourses = async (req, res) => {
 
 
 export const updateUserProfile = async (req, res) => {
-    const { fullName, email, bio, skills, profilePhoto } = req.body;
+    const { fullName, email, bio, skills } = req.body;
+    let profilePhotoUrl = req.file?.path; 
 
     try {
+        // Check if a file is included in the request
+        if (req.file) {
+            // Upload the file to Cloudinary
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'media', // Specify the folder in Cloudinary
+            });
+            profilePhotoUrl = result.secure_url; // Get the URL of the uploaded image
+        }
+
         // Build update object dynamically based on provided fields
         const updateFields = {};
         if (fullName) updateFields.fullName = fullName;
         if (email) updateFields.email = email;
         if (bio) updateFields.bio = bio;
-        if (skills) updateFields.skills = skills;
-        if (profilePhoto) updateFields.profilePhoto = profilePhoto;
+        if (skills) updateFields.skills = Array.isArray(skills) ? skills : skills.split(',').map((skill) => skill.trim());
+        if (profilePhotoUrl) updateFields.profilePhoto = profilePhotoUrl;
 
         // Update user in the database
         const updatedUser = await User.findByIdAndUpdate(req.user.id, updateFields, {
             new: true,
-            runValidators: true
+            runValidators: true,
         });
 
         if (!updatedUser) {
