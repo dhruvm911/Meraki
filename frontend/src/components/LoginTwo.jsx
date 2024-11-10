@@ -125,7 +125,7 @@ const LoginTwo = () => {
 
             {/* Sign Up Link */}
             <div className="text-center">
-              <p className="text-sm">Don't have an account? <a href="#" className="text-primary hover:underline">Sign up</a></p>
+              <p className="text-sm">Don't have an account? <a href="/signup" class="text-primary hover:underline">Sign up</a></p>
             </div>
           </form>
         </div>
