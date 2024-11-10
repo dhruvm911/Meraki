@@ -24,6 +24,7 @@ import CourseDetail from './components/CourseDetail';
 import EditCourse from './components/EditCourse';
 import CoursesList from './components/CoursesList';
 import SearchResults from './components/SearchResults';
+import CourseDetails from './components/CourseDetails';
 
 
 function App() {
@@ -89,6 +90,8 @@ function App() {
                 <SearchResults />
               </>
             } />
+
+            <Route path="/courses/:courseId" element={<CourseDetails />} />
 
             <Route path="/course/:id" element={
               <>
