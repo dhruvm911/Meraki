@@ -95,24 +95,24 @@ export default function LoginForm() {
 
             {/* Input Fields */}
             <div className="relative mb-6">
-              <TEInput
+              <input
                 type="email"
                 placeholder="Email address"
                 size="lg"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
+                className="w-full bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               />
             </div>
 
             <div className="relative mb-6">
-              <TEInput
+              <input
                 type="password"
                 placeholder="Password"
                 size="lg"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
+                className="w-full bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               />
             </div>
 
@@ -124,15 +124,17 @@ export default function LoginForm() {
             )}
 
             {/* Sign In Button */}
-            <button type="submit" className="w-full py-3 mb-4 bg-primary hover:bg-primary-dark text-white rounded-lg font-semibold">
+            <div className="text-center">
+            <button type="submit" className="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150">
               Sign in
             </button>
+            </div>
 
             {/* Sign Up Link */}
             <div className="text-center">
-  <p className="text-sm">
+  <p className="text-white mt-4">
     Don't have an account? 
-    <Link to="/signup" className="text-primary hover:underline">Sign up</Link>
+    <Link to="/signup" className="text-sm text-blue-500 -200 hover:underline mt-4"> Sign up</Link>
   </p>
 </div>
           </form>
