@@ -46,17 +46,17 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="profile-card h-[400px] w-[350px] rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+    <div className="flex justify-center items-center min-h-screen bg-black-100">
+      <div className="profile-card h-[400px] w-[350px] rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 bg-gray-300 flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
         {/* Profile Picture */}
         <div className="avatar w-full pt-5 flex items-center justify-center flex-col gap-1">
-          <div className='img_container w-full flex items-center justify-center relative z-40 after:absolute after:h-[6px] after:w-full after:bg-[#58b0e0] after:top-4 after:group-hover:size-[1%] after:delay-300 after:group-hover:delay-0 after:group-hover:transition-all after:group-hover:duration-300 after:transition-all after:duration-300 before:absolute before:h-[6px] before:w-full before:bg-[#58b0e0] before:bottom-4 before:group-hover:size-[1%] before:delay-300 before:group-hover:delay-0 before:group-hover:transition-all before:group-hover:duration-300 before:transition-all before:duration-300'>
+          <div className='img_container w-full flex items-center justify-center relative z-40 after:absolute after:h-[6px] after:w-full after:bg-orange-400 after:top-4 after:group-hover:size-[1%] after:delay-300 after:group-hover:delay-0 after:group-hover:transition-all after:group-hover:duration-300 after:transition-all after:duration-300 before:absolute before:h-[6px] before:w-full before:bg-orange-400 before:bottom-4 before:group-hover:size-[1%] before:delay-300 before:group-hover:delay-0 before:group-hover:transition-all before:group-hover:duration-300 before:transition-all before:duration-300'>
             <img
               src={user.profilePhoto || '../../ProjectImg/pp.jpg'}
               alt="Profile"
               className="w-24 h-24 z-20 rounded-full object-cover"
             />
-            <div class="absolute bg-[#58b0e0] z-10 size-[40%] w-full group-hover:size-[1%] group-hover:transition-all group-hover:duration-300 transition-all duration-300 delay-700 group-hover:delay-0"
+            <div class="absolute bg-orange-400 z-10 size-[40%] w-full group-hover:size-[1%] group-hover:transition-all group-hover:duration-300 transition-all duration-300 delay-700 group-hover:delay-0"
             ></div>
           </div>
         </div>
@@ -95,7 +95,7 @@ const Dashboard = () => {
                 <svg
                   id="phone"
                   viewBox="0 0 24 24"
-                  class="fill-stone-700 group-hover:fill-[#58b0e0]"
+                  class="fill-stone-700 group-hover:fill-orange-400"
                   height="15"
                   width="15"
                   xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,7 @@ const Dashboard = () => {
             </li>
             <li>
                 <svg
-                  class="fill-stone-700 group-hover:fill-[#58b0e0]"
+                  class="fill-stone-700 group-hover:fill-orange-400"
                   height="15"
                   width="15"
                   id="mail"
@@ -129,7 +129,7 @@ const Dashboard = () => {
             </li>
             <li>
                 <svg
-                  class="fill-stone-700 group-hover:fill-[#58b0e0]"
+                  class="fill-stone-700 group-hover:fill-orange-400"
                   height="15"
                   width="15"
                   id="globe"
@@ -149,7 +149,7 @@ const Dashboard = () => {
                 <svg
                   id="map"
                   viewBox="0 0 16 16"
-                  class="fill-stone-700 group-hover:fill-[#58b0e0]"
+                  class="fill-stone-700 group-hover:fill-orange-400"
                   height="15"
                   width="15"
                   xmlns="http://www.w3.org/2000/svg"
@@ -168,13 +168,13 @@ const Dashboard = () => {
         <div className="mt-6 flex justify-between space-x-10">
           <button
             onClick={() => navigate('/edit-profile')} // Navigate to Edit Profile page
-            className="bg-[#58b0e0] text-white px-4 py-2 rounded-md hover:bg-blue-900"
+            className="bg-orange-400 text-white px-4 py-2 rounded-md hover:bg-orange-900"
           >
             Edit Profile
           </button>
           <button
             onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-900"
           >
             Logout
           </button>

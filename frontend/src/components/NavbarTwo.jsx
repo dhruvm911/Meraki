@@ -21,7 +21,7 @@ const NavbarTwo = ({ user }) => {
     };
 
     return (
-        <nav className="bg-blue-600 p-4 shadow-lg">
+        <nav className="bg-orange-400 p-4 shadow-lg">
             <div className="flex items-center justify-between max-w-7xl mx-auto">
                 {/* Logo Section */}
                 <Link to="/home" className="text-white text-2xl font-semibold">Meraki</Link>
@@ -35,7 +35,7 @@ const NavbarTwo = ({ user }) => {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
-                    <button type="submit" className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
+                    <button type="submit" className="p-2 bg-orange-400 text-white rounded-lg hover:bg-orange-700">
                         <i className="fa fa-search"></i>
                     </button>
                 </form>
