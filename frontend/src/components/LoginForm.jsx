@@ -30,9 +30,10 @@ export default function LoginForm() {
         // Handle successful login, such as storing token or redirecting
         
         console.log("Login successful:", data);
-        const token = data.token; // Make sure 'data.token' matches the actual response key
+        const { token, userId } = data;// Make sure 'data.token' matches the actual response key
         if (token) {
           localStorage.setItem("authToken", token);
+          localStorage.setItem("userId", userId);
           await refreshUser();
           console.log("Token saved to localStorage:", token);
         }

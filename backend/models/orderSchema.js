@@ -5,7 +5,7 @@ const orderSchema = new mongoose.Schema({
     courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
     amountPaid: { type: Number, required: true },
     status: { type: String, enum: ['pending', 'completed'], default: 'pending' },
-    paymentId: { type: String }, // Store Razorpay payment ID here
+    paymentId: { type: String }, // Store Stripe payment ID here
 }, { timestamps: true });
 
 export const Order = mongoose.model('Order',orderSchema);

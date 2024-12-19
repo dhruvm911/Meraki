@@ -5,6 +5,7 @@ import session from 'express-session';
 import passport from 'passport';
 import helmet from "helmet";
 import morgan from "morgan";
+import bodyParser from 'body-parser';
 import "./strategies/googleStrategy.js";
 // import "./strategies/facebookStrategy.js"
 import connectDB from "./utils/db.js";
@@ -16,12 +17,16 @@ import assignmentRoute from "./routes/assignmentRoutes.js";
 import progressRoute from "./routes/progressRoutes.js";
 import cartRoute from "./routes/cartRoutes.js";
 import uploadRoutes from "./routes/uploads.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import webhookRoute from "./routes/webhookRoute.js";
+import { stripeWebhook } from "./controllers/stripeController.js";
 
 dotenv.config();
 
 const app = express();
 
 //middlewares
+app.use('/webhook', bodyParser.raw({ type: 'application/json' }), stripeWebhook);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -54,6 +59,8 @@ app.use("/api/v1/assignment",assignmentRoute);
 app.use("/api/v1/progress",progressRoute);
 app.use("/api/v1/cart",cartRoute);
 app.use("/api/v1", uploadRoutes);
+app.use("/api/v1/payment",paymentRoutes);
+app.use('/webhook', webhookRoute);
 
 app.listen(port,async () => {
     await connectDB();

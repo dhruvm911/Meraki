@@ -61,8 +61,31 @@ const CourseDetails = () => {
     const handleAddToCart = async () => {
         try {
             const token = localStorage.getItem('authToken');
+            const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
+        
+            // Step 1: Fetch the user's enrolled courses
+            const enrolledCoursesResponse = await fetch(`http://localhost:5000/api/v1/user/enrolled-courses`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
     
-            // Step 1: Fetch current cart items to check if course is already added
+            const enrolledCoursesData = await enrolledCoursesResponse.json();
+            console.log(enrolledCoursesData);
+    
+            // Step 2: Check if the course is already enrolled
+            const enrolledCourses = enrolledCoursesData.enrolledCourses || [];
+            const isCourseEnrolled = enrolledCourses.some(course => course._id === courseId);
+    
+            if (isCourseEnrolled) {
+                // Course is already enrolled, show alert
+                alert("You are already enrolled in this course!");
+                return;  // Prevent further action
+            }
+    
+            // Step 3: Fetch current cart items to check if course is already added
             const cartResponse = await fetch('http://localhost:5000/api/v1/cart', {
                 method: 'GET',
                 headers: {
@@ -73,15 +96,15 @@ const CourseDetails = () => {
     
             const cartData = await cartResponse.json();
     
-            // Step 2: Check if the course is already in the cart
+            // Step 4: Check if the course is already in the cart
             const isCourseInCart = cartData.items.some(item => item._id === courseId);
     
             if (isCourseInCart) {
                 // Course is already in the cart, navigate to home
-                alert("Course already in cart!")
+                alert("Course is already in your cart!");
                 navigate('/home');
             } else {
-                // Step 3: If the course is not in the cart, proceed with adding it
+                // Step 5: If the course is not in the cart, proceed with adding it
                 const response = await fetch(`http://localhost:5000/api/v1/cart/add/${courseId}`, {
                     method: 'POST',
                     headers: {
@@ -95,7 +118,7 @@ const CourseDetails = () => {
     
                 if (response.ok) {
                     setMessage(data.message); // Display success message
-                    alert("Course added to cart!")
+                    alert("Course added to cart!");
                     navigate("/home");
                 } else {
                     setMessage(data.message); // Display error message
@@ -103,8 +126,10 @@ const CourseDetails = () => {
             }
         } catch (err) {
             setMessage('Error adding course to cart');
+            console.error(err);
         }
     };
+    
     
 
     if (loading) return <p>Loading...</p>;

@@ -25,6 +25,9 @@ import EditCourse from './components/EditCourse';
 import CoursesList from './components/CoursesList';
 import SearchResults from './components/SearchResults';
 import CourseDetails from './components/CourseDetails';
+import CartPage from './components/CartPage';
+import SuccessPage from './components/SuccessPage';
+import CancelPage from './components/CancelPage';
 
 
 function App() {
@@ -70,9 +73,29 @@ function App() {
               </>
             } />
 
+            <Route path="/success" element={
+              <>
+                <SuccessPage />
+
+              </>
+            } />
+
+            <Route path="/cancel" element={
+              <>
+                <CancelPage />
+
+              </>
+            } />
+
             <Route path="/create-course" element={
               <>
                 <CreateCourse />
+
+              </>
+            } />
+            <Route path="/cart" element={
+              <>
+                <CartPage />
 
               </>
             } />
