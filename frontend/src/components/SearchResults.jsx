@@ -72,6 +72,13 @@ const SearchResults = () => {
                         key={course._id}
                         className="border border-gray-300 rounded-lg p-4 shadow hover:shadow-lg transition"
                     >
+                        {course.thumbnail && (
+                            <img
+                                src={course.thumbnail}
+                                alt={course.title}
+                                className="w-full h-40 object-cover rounded mb-4"
+                            />
+                        )}
                         <h3 className="text-xl font-bold mb-2">{course.title}</h3>
                         <p className="text-gray-700 mb-4">
                             {course.description.length > 100

@@ -138,16 +138,11 @@ export const getCreatedCourses = async (req, res) => {
 export const updateUserProfile = async (req, res) => {
     const { fullName, email, bio, skills } = req.body;
     let profilePhotoUrl = req.file?.path; 
+    console.log(req.file);
+    console.log(req.body);
 
     try {
-        // Check if a file is included in the request
-        if (req.file) {
-            // Upload the file to Cloudinary
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'media', // Specify the folder in Cloudinary
-            });
-            profilePhotoUrl = result.secure_url; // Get the URL of the uploaded image
-        }
+        
 
         // Build update object dynamically based on provided fields
         const updateFields = {};

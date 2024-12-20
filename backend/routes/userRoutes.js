@@ -33,6 +33,6 @@ router.get('/profile', authMiddleware, getUserProfile);
 router.get('/created-courses', authMiddleware, roleMiddleware('instructor'), getCreatedCourses);
 
 // Route to update user profile (for authenticated users)
-router.put('/update-profile', authMiddleware, upload.single('file'), updateUserProfile);
+router.put('/update-profile', authMiddleware, upload.single('profilePhoto'), updateUserProfile);
 
 export default router;

@@ -1,4 +1,5 @@
 import express from 'express';
+import upload from "../middleware/multer.js";
 import {
     createCourse,
     getAllCourses,
@@ -17,7 +18,7 @@ const router = express.Router();
 router.get('/search',searchCourses);
 
 // Create a new course (accessible only by instructors)
-router.post('/create', authMiddleware, roleMiddleware('instructor'), createCourse);
+router.post('/create', authMiddleware, roleMiddleware('instructor'), upload.single('thumbnail'), createCourse);
 
 // Get all courses (accessible by everyone)
 router.get('/', authMiddleware, getAllCourses);
@@ -28,7 +29,7 @@ router.get('/:courseId', authMiddleware, getCourseById);
 
 
 // Update a course (accessible only by instructors)
-router.patch('/:courseId', authMiddleware, roleMiddleware('instructor'), updateCourse);
+router.patch('/:courseId', authMiddleware, roleMiddleware('instructor'), upload.single('thumbnail'), updateCourse);
 
 // Delete a course (accessible only by instructors)
 router.delete('/:courseId', authMiddleware, roleMiddleware('instructor'), deleteCourse);

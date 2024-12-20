@@ -8,7 +8,7 @@ const CreateCourse = () => {
         category: '',
         price: '',
     });
-
+    const [thumbnail,setThumbnail] = useState(null);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -18,6 +18,10 @@ const CreateCourse = () => {
             ...prevState,
             [name]: value,
         }));
+    };
+
+    const handleFileChange = (e) => {
+        setThumbnail(e.target.files[0]); // Save the selected file
     };
 
     const handleSubmit = async (e) => {
@@ -30,19 +34,29 @@ const CreateCourse = () => {
             console.log(token);
             const config = {
                 headers: {
-                    'Content-Type': 'application/json',
+                    
                     Authorization: `Bearer ${token}`, // Pass token for authentication
                 },
             };
 
+            const formDataToSend = new FormData();
+            formDataToSend.append('title', formData.title);
+            formDataToSend.append('description', formData.description);
+            formDataToSend.append('category', formData.category);
+            formDataToSend.append('price', formData.price);
+            if (thumbnail) {
+                formDataToSend.append('thumbnail', thumbnail); // Append the file
+            }
+
             const response = await axios.post(
                 'http://localhost:5000/api/v1/course/create',
-                formData,
+                formDataToSend,
                 config
             );
 
             setSuccessMessage(response.data.message);
             setFormData({ title: '', description: '', category: '', price: '' }); // Reset the form
+            setThumbnail(null);
         } catch (error) {
             console.log(error);
             setError(error.response?.data?.message || 'Something went wrong');
@@ -107,6 +121,17 @@ const CreateCourse = () => {
                         placeholder="Enter course price"
                         required
                         min="0"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-gray-700 font-medium mb-2">Thumbnail</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-black bg-white"
+                        required
                     />
                 </div>
 

@@ -50,32 +50,27 @@ const EditProfile = () => {
 
   // Handle profile photo upload
   const handlePhotoUpload = async (e) => {
-    const file = e.target.files[0]; // Select the uploaded file
-  
+    const file = e.target.files[0];
     if (!file) {
       setErrorMessage('No file selected.');
       return;
     }
-  
+
     const uploadData = new FormData();
-    uploadData.append('file', file);
-  
+    uploadData.append('profilePhoto', file);
+
     try {
-      const token = localStorage.getItem('authToken'); // Include token for authorization if required
-      const response = await axios.post(
-        'http://localhost:5000/api/v1/upload', // Backend upload endpoint
-        uploadData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`, // Optional if your upload endpoint is secured
-          },
-        }
-      );
-  
-      // Update profilePhoto with the URL from the backend response
-      setFormData((prev) => ({ ...prev, profilePhoto: response.data.url }));
-  
+      const token = localStorage.getItem('authToken');
+      const response = await axios.put('http://localhost:5000/api/v1/user/update-profile', uploadData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response);
+
+      setFormData((prev) => ({ ...prev, profilePhoto: response.data.imageUrl }));
       setSuccessMessage('Photo uploaded successfully!');
     } catch (error) {
       console.error('Error uploading photo:', error);

@@ -4,13 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 const EditCourse = () => {
     const { id } = useParams();  // Getting course ID from the URL
     const navigate = useNavigate();
-    
+
     const [course, setCourse] = useState({
         title: '',
         description: '',
         price: '',
         category: '',
     });
+    const [thumbnail, setThumbnail] = useState(null); // State for thumbnail
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -50,26 +51,36 @@ const EditCourse = () => {
         }));
     };
 
+    // Handle thumbnail file selection
+    const handleThumbnailChange = (e) => {
+        setThumbnail(e.target.files[0]); // Set the selected file
+    };
+
+
     // Handle form submission to update course
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
 
-        const updatedCourse = {
-            title: course.title,
-            description: course.description,
-            price: course.price,
-            category: course.category,
-        };
+        const formData = new FormData();
+        formData.append('title', course.title);
+        formData.append('description', course.description);
+        formData.append('price', course.price);
+        formData.append('category', course.category);
+        if (thumbnail) {
+            formData.append('thumbnail', thumbnail); // Add thumbnail to form data
+        }
+
+
 
         try {
             const response = await fetch(`http://localhost:5000/api/v1/course/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-                    'Content-Type': 'application/json',  // Ensure we are sending JSON
+                    
                 },
-                body: JSON.stringify(updatedCourse),
+                body: formData,
             });
 
             const data = await response.json();
@@ -146,6 +157,19 @@ const EditCourse = () => {
                         onChange={handleChange}
                         className="mt-2 p-2 w-full border border-gray-300 rounded-md text-black bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
+                    />
+                </div>
+
+                {/* Course Thumbnail */}
+                <div>
+                    <label htmlFor="thumbnail" className="block font-semibold">Thumbnail</label>
+                    <input
+                        type="file"
+                        id="thumbnail"
+                        name="thumbnail"
+                        accept="image/*"
+                        onChange={handleThumbnailChange}
+                        className="mt-2 p-2 w-full border border-gray-300 rounded-md text-black bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
 

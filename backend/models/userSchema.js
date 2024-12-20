@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     createdCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }], // For instructors
     googleId: { type: String }, // For Google login
     facebookId: { type: String } // For Facebook login
+    
 }, { timestamps: true });
 
 export const User = mongoose.model('User',userSchema);

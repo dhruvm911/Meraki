@@ -54,6 +54,13 @@ const CreatedCourses = () => {
                 ) : (
                     courses.map((course) => (
                         <div key={course._id} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg">
+                            {course.thumbnail && (
+                            <img
+                                src={course.thumbnail}
+                                alt={course.title}
+                                className="w-full h-40 object-cover rounded mb-4"
+                            />
+                        )}
                             <h3 className="text-xl font-semibold text-blue-600">{course.title}</h3>
                             <p className="text-gray-700 mt-2">{truncateDescription(course.description)}</p>
 

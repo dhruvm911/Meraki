@@ -58,8 +58,8 @@ app.use("/api/v1/review",reviewRoute);
 app.use("/api/v1/assignment",assignmentRoute);
 app.use("/api/v1/progress",progressRoute);
 app.use("/api/v1/cart",cartRoute);
-app.use("/api/v1", uploadRoutes);
 app.use("/api/v1/payment",paymentRoutes);
+app.use("/api/v1/upload",uploadRoutes);
 app.use('/webhook', webhookRoute);
 
 app.listen(port,async () => {

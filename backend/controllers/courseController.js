@@ -10,6 +10,7 @@ export const createCourse = async (req, res) => {
     }
 
     const { title, description, category, price } = req.body;
+    let thumbnailUrl = req.file?.path; // Get the file path from Cloudinary upload
 
     try {
         // Create a new course instance
@@ -19,6 +20,7 @@ export const createCourse = async (req, res) => {
             instructor: req.user._id, // Associate with the logged-in user
             category,
             price,
+            thumbnail: thumbnailUrl, // Add thumbnail URL if available
         });
 
         // Save the course to the database
@@ -102,38 +104,23 @@ export const getCourseById = async (req, res) => {
     }
 };
 
-// export const updateCourse = async (req, res) => {
-//     const { courseId } = req.params; // Extract the course ID from request parameters
-
-//     try {
-//         // Find the course by ID and update only the provided fields
-//         const updatedCourse = await Course.findByIdAndUpdate(courseId, req.body, { new: true, runValidators: true });
-//         console.log(req.params);
-//         // Check if the course exists
-//         if (!updatedCourse) {
-//             return res.status(404).json({ message: 'Course not found' });
-//         }
-
-//         // Send the updated course back to the client
-//         res.status(200).json({ course: updatedCourse });
-//     } catch (error) {
-//         res.status(500).json({ message: 'Error updating course', error: error.message });
-//     }
-// };
-
 export const updateCourse = async (req, res) => {
     const { courseId } = req.params;
     console.log("Request Body:", req.body);
 
     const { title, description, price, category } = req.body;
+    let thumbnailUrl = req.file?.path; // Get the file path from Cloudinary upload
 
     try {
-        const updatedCourse = await Course.findByIdAndUpdate(courseId, {
-            title,
-            description,
-            price,
-            category,
-        }, { new: true });
+        const updateFields = {};
+        if (title) updateFields.title = title;
+        if (description) updateFields.description = description;
+        if (price) updateFields.price = price;
+        if (category) updateFields.category = category;
+        if (thumbnailUrl) updateFields.thumbnail = thumbnailUrl;
+
+        // Update the course in the database
+        const updatedCourse = await Course.findByIdAndUpdate(courseId, updateFields, { new: true });
 
         if (!updatedCourse) {
             return res.status(404).json({ message: 'Course not found' });

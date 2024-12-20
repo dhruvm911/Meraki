@@ -139,6 +139,13 @@ const CourseDetails = () => {
         <div className="container mx-auto p-4">
             {course ? (
                 <>
+                    {course.thumbnail && (
+                            <img
+                                src={course.thumbnail}
+                                alt={course.title}
+                                className="w-full h-40 object-cover rounded mb-4"
+                            />
+                        )}
                     <h2 className="text-3xl font-bold mb-6">{course.title}</h2>
                     <p className="text-lg mb-4">{course.description}</p>
                     <p className="text-sm text-gray-600 mb-2">
