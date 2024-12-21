@@ -19,6 +19,7 @@ import cartRoute from "./routes/cartRoutes.js";
 import uploadRoutes from "./routes/uploads.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import webhookRoute from "./routes/webhookRoute.js";
+import lectureRoute from "./routes/lectureRoutes.js";
 import { stripeWebhook } from "./controllers/stripeController.js";
 
 dotenv.config();
@@ -60,6 +61,7 @@ app.use("/api/v1/progress",progressRoute);
 app.use("/api/v1/cart",cartRoute);
 app.use("/api/v1/payment",paymentRoutes);
 app.use("/api/v1/upload",uploadRoutes);
+app.use("/api/v1/lecture", lectureRoute);
 app.use('/webhook', webhookRoute);
 
 app.listen(port,async () => {

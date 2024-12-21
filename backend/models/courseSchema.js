@@ -6,7 +6,12 @@ const courseSchema = new mongoose.Schema({
     category: { type: String, required: true },
     price: { type: Number, required: true },
     instructor: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    videos: [{ type: String }], // URLs for videos stored in Cloudinary
+    lectures: [{
+        url: { type: String, required: true }, // Cloudinary URL for the video
+        title: { type: String, required: true },
+        description: { type: String },
+        createdAt: { type: Date, default: Date.now },
+    }],
     files: [{ type: String }], // Other supplementary files
     assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }],
     quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' }],
