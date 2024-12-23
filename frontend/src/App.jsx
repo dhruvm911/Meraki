@@ -28,6 +28,8 @@ import CourseDetails from './components/CourseDetails';
 import CartPage from './components/CartPage';
 import SuccessPage from './components/SuccessPage';
 import CancelPage from './components/CancelPage';
+import MyCourses from './components/MyCourses';
+import MyCourseDetail from './components/MyCourseDetail';
 
 
 function App() {
@@ -56,6 +58,13 @@ function App() {
               <>
                 <NavbarTwo />
                 <CoursesList />
+              </>
+            } />
+
+            <Route path="/my-courses" element={
+              <>
+                <NavbarTwo />
+                <MyCourses />
               </>
             } />
 
@@ -115,6 +124,8 @@ function App() {
             } />
 
             <Route path="/courses/:courseId" element={<CourseDetails />} />
+
+            <Route path="/mycourse/:courseId" element={<MyCourseDetail />} />
 
             <Route path="/course/:id" element={
               <>

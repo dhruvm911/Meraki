@@ -4,9 +4,26 @@ import cloudinary from '../utils/cloudinary.js';
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: 'media', // Optional: specify a folder in Cloudinary
-    allowed_formats: ['jpg', 'png', 'jpeg'], // Adjust formats as needed
+  params: async (req, file) => {
+    let folder = 'media'; // Default folder
+    let resourceType = 'raw'; // Default resource type for general files
+
+    // Determine the folder and resource type based on file type
+    if (file.mimetype.startsWith('image/')) {
+      folder = 'images';
+      resourceType = 'image';
+    } else if (file.mimetype.startsWith('video/')) {
+      folder = 'videos';
+      resourceType = 'video';
+    } else if (file.mimetype === 'application/pdf') {
+      folder = 'documents';
+    }
+
+    return {
+      folder,
+      resource_type: resourceType, // Specify the resource type for Cloudinary
+      allowed_formats: ['jpg', 'jpeg', 'png', 'mp4', 'mov', 'pdf'], // Add all necessary formats
+    };
   },
 });
 
