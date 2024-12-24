@@ -1,12 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const MyCourseDetail = () => {
     const { courseId } = useParams(); // Extract courseId from the URL
     const [course, setCourse] = useState(null);
+    const [user, setUser] = useState({
+        _id: '',
+        fullName: '',
+        email: '',
+        role: '',
+        profilePhoto: '',
+        bio: '',
+        skills: [],
+    });
     const [lectures, setLectures] = useState({});
+    const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem('authToken'); // Get token from localStorage
+                if (!token) {
+                    navigate('/login'); // Redirect to login if token is missing
+                    return;
+                }
+
+                const response = await axios.get('http://localhost:5000/api/v1/user/profile', {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+                    },
+                });
+
+                setUser(response.data.user); // Set user data from API response
+                console.log(response);
+
+            } catch (error) {
+                console.error('Error fetching user data', error);
+                setError('Error fetching user data');
+            }
+        };
+
+
+
+        fetchUserData();
+
+    }, [navigate]);
 
     useEffect(() => {
         const fetchCourseDetails = async () => {
@@ -36,7 +78,7 @@ const MyCourseDetail = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                
+
                 const data = await response.json();
                 console.log(data.lectures);
                 if (response.ok) {
@@ -57,12 +99,37 @@ const MyCourseDetail = () => {
             }
         };
 
+        const fetchUnreadMessages = async () => {
+            try {
+                const token = localStorage.getItem('authToken');
+                const response = await fetch(`http://localhost:5000/api/v1/chat/${courseId}/unread-message`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    setUnreadMessagesCount(data.length || 0);
+                } else {
+                    setError(data.message || 'Error fetching unread messages');
+                }
+            } catch (err) {
+                setError('Something went wrong while fetching unread messages');
+            }
+        };
+
         fetchCourseDetails();
         fetchLectures();
+        fetchUnreadMessages();
+        console.log(unreadMessagesCount);
     }, [courseId]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
+
+
+    const userId = user._id;
 
     return (
         <div className="container mx-auto p-4">
@@ -127,6 +194,12 @@ const MyCourseDetail = () => {
             ) : (
                 <p>Course not found</p>
             )}
+            <Link
+                to={`/mychat/${courseId}/${userId}`}
+                className="fixed bottom-6 right-6 bg-orange-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-orange-600 transition duration-200"
+            >
+                {unreadMessagesCount > 0 ? `Unread messages (${unreadMessagesCount})` : 'Ask a doubt'}
+            </Link>
         </div>
     );
 };

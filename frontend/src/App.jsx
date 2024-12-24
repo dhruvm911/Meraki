@@ -30,6 +30,10 @@ import SuccessPage from './components/SuccessPage';
 import CancelPage from './components/CancelPage';
 import MyCourses from './components/MyCourses';
 import MyCourseDetail from './components/MyCourseDetail';
+import MyChat from './components/MyChat';
+import AllChats from './components/AllChats';
+import UnreadMessages from './components/UnreadMessages';
+import MyIChat from './components/MyIChat';
 
 
 function App() {
@@ -126,6 +130,14 @@ function App() {
             <Route path="/courses/:courseId" element={<CourseDetails />} />
 
             <Route path="/mycourse/:courseId" element={<MyCourseDetail />} />
+
+            <Route path="mychat/:courseId/:userId" element={<MyChat />} />
+
+            <Route path="/unread-messages/:courseId" element={<UnreadMessages />} />
+            <Route path="/all-chats/:courseId" element={<AllChats />} />
+
+            {/* <Route path="mychat/:courseId/:studentId" element={<MyIChat />} /> */}
+
 
             <Route path="/course/:id" element={
               <>

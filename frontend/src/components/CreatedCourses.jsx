@@ -53,7 +53,7 @@ const CreatedCourses = () => {
                     <p>No courses found</p>
                 ) : (
                     courses.map((course) => (
-                        <div key={course._id} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg">
+                        <div key={course._id} className="border border-gray-300 rounded-lg p-4 shadow hover:shadow-lg transition">
                             {course.thumbnail && (
                             <img
                                 src={course.thumbnail}
@@ -61,21 +61,21 @@ const CreatedCourses = () => {
                                 className="w-full h-40 object-cover rounded mb-4"
                             />
                         )}
-                            <h3 className="text-xl font-semibold text-blue-600">{course.title}</h3>
-                            <p className="text-gray-700 mt-2">{truncateDescription(course.description)}</p>
+                            <h3 className="text-xl font-bold mb-2">{course.title}</h3>
+                            <p className="text-gray-700 mb-4">{truncateDescription(course.description)}</p>
 
                             {/* Category with grey background */}
-                            <div className="mt-2 py-1 px-3 inline-block bg-gray-200 text-gray-700 text-sm rounded-md">
+                            <div className="inline-block bg-gray-200 text-gray-800 px-2 py-1 rounded text-sm mb-2">
                                 {course.category}
                             </div>
 
                             {/* Price */}
-                            <div className="mt-3 font-semibold text-gray-900 text-lg">{`₹${course.price}`}</div>
+                            <div className="mt-3 font-semibold text-gray-200 text-lg">{`₹${course.price}`}</div>
 
                             {/* View more button (optional) */}
                             <button
                                 onClick={() => navigate(`/course/${course._id}`)}
-                                className="mt-4 w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                                className="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
                             >
                                 View Details
                             </button>

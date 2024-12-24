@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
 import { Link } from "react-router-dom";
@@ -8,7 +8,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { refreshUser } = useAuth(); 
+  const { refreshUser } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -25,10 +25,10 @@ export default function LoginForm() {
       });
 
       const data = await response.json();
-      
+
       if (response.ok) {
         // Handle successful login, such as storing token or redirecting
-        
+
         console.log("Login successful:", data);
         const { token, userId } = data;// Make sure 'data.token' matches the actual response key
         if (token) {
@@ -39,7 +39,7 @@ export default function LoginForm() {
         }
 
         navigate("/home");
-      
+
       } else {
         // Show error message if login failed
         setErrorMessage(data.message || "Login failed. Please try again.");
@@ -53,7 +53,7 @@ export default function LoginForm() {
     <section className="min-h-screen pt-24 bg-dark text-white">
       {/* Added `pt-24` for extra spacing from navbar */}
       <div className="container mx-auto flex flex-col lg:flex-row items-center justify-center min-h-full">
-        
+
         {/* Image Section */}
         <div className="w-full lg:w-1/2 flex justify-center items-center p-8">
           <img
@@ -66,7 +66,7 @@ export default function LoginForm() {
         {/* Form Section */}
         <div className="w-full lg:w-1/2 flex justify-center items-center p-8">
           <form onSubmit={handleLogin} className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-md">
-            
+
             {/* Social Login */}
             <div className="flex flex-row items-center justify-center lg:justify-start mb-6">
               <p className="mr-4 text-lg">Sign in with</p>
@@ -131,11 +131,11 @@ export default function LoginForm() {
 
             {/* Sign Up Link */}
             <div className="text-center">
-  <p className="text-sm">
-    Don't have an account? 
-    <Link to="/signup" className="text-primary hover:underline">Sign up</Link>
-  </p>
-</div>
+              <p className="text-sm">
+                Don't have an account?
+                <Link to="/signup" className="text-primary hover:underline">Sign up</Link>
+              </p>
+            </div>
           </form>
         </div>
       </div>

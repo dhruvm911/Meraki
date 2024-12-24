@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const CourseDetail = () => {
     const [course, setCourse] = useState(null);
     const [error, setError] = useState(null);
+    const [unreadCount, setUnreadCount] = useState(0);
     const { id } = useParams();  // Getting course ID from the URL
     const navigate = useNavigate();
 
@@ -31,7 +32,31 @@ const CourseDetail = () => {
             }
         };
 
+
+
+
+        const fetchUnreadCount = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/api/v1/chat/${id}/unread-message`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setUnreadCount(data.length); // Number of unread messages
+                } else {
+                    console.error('Failed to fetch unread messages count');
+                }
+            } catch (error) {
+                console.error('Error fetching unread messages:', error);
+            }
+        };
+
         fetchCourseDetails();
+        fetchUnreadCount();
     }, [id]);
 
     // Handle delete course
@@ -78,6 +103,11 @@ const CourseDetail = () => {
     // Handle view enrolled students
     const handleEnrolledStudents = () => {
         navigate(`/enrolled-students/${id}`);  // Navigate to enrolled students page
+    };
+
+    const handleChatNavigation = () => {
+        const targetRoute = unreadCount > 0 ? `/unread-messages/${id}` : `/all-chats/${id}`;
+        navigate(targetRoute);
     };
 
     if (error) {
@@ -150,7 +180,17 @@ const CourseDetail = () => {
                     </div>
                 </div>
             </div>
+            {/* Floating Orange Button */}
+            <div className="fixed bottom-4 right-4">
+                <button
+                    onClick={handleChatNavigation}
+                    className="bg-orange-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-orange-700"
+                >
+                    {unreadCount > 0 ? `Unread Messages (${unreadCount})` : 'Messages'}
+                </button>
+            </div>
         </div>
+
     );
 };
 
