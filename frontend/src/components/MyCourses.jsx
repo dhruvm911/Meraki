@@ -30,6 +30,7 @@ const MyCourses = () => {
         };
 
         fetchEnrolledCourses();
+        console.log(courses);
     }, []);
 
     // Get the courses to display on the current page

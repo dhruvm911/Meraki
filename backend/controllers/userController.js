@@ -98,7 +98,7 @@ export const logoutUser = (req, res) => {
 
 export const getEnrolledCourses = async (req, res) => {
     try {
-        const enrolledCourses = await Course.find({ enrolledStudents: req.user.id });
+        const enrolledCourses = await Course.find({ enrolledStudents: req.user.id }).populate('instructor', 'fullName profilePhoto');
 
         res.status(200).json({ enrolledCourses });
     } catch (error) {

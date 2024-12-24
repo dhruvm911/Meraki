@@ -33,7 +33,7 @@ import MyCourseDetail from './components/MyCourseDetail';
 import MyChat from './components/MyChat';
 import AllChats from './components/AllChats';
 import UnreadMessages from './components/UnreadMessages';
-import MyIChat from './components/MyIChat';
+
 
 
 function App() {
