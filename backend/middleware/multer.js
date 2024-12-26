@@ -15,14 +15,14 @@ const storage = new CloudinaryStorage({
     } else if (file.mimetype.startsWith('video/')) {
       folder = 'videos';
       resourceType = 'video';
-    } else if (file.mimetype === 'application/pdf') {
+    } else if (file.mimetype === 'application/pdf' || file.mimetype === 'application/msword' || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
       folder = 'documents';
     }
 
     return {
       folder,
       resource_type: resourceType, // Specify the resource type for Cloudinary
-      allowed_formats: ['jpg', 'jpeg', 'png', 'mp4', 'mov', 'pdf'], // Add all necessary formats
+      allowed_formats: ['jpg', 'jpeg', 'png', 'mp4', 'mov', 'pdf', 'txt', 'doc', 'docx'], // Add all necessary formats
     };
   },
 });

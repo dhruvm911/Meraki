@@ -1,9 +1,10 @@
 import { Assignment } from "../models/assignmentSchema.js";
 import { Course } from "../models/courseSchema.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const createAssignment = async (req, res) => {
     const { courseId } = req.params;
-    const { title, description, dueDate, submissionLink } = req.body;
+    const { title, description, dueDate } = req.body;
 
     try {
 
@@ -11,6 +12,17 @@ export const createAssignment = async (req, res) => {
         const course = await Course.findById(courseId);
         if (!course) {
             return res.status(404).json({ message: "Course not found" });
+        }
+
+        let submissionLink = null;
+
+        // Handle file upload to Cloudinary
+        if (req.file) {
+            const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'media',
+                resource_type: 'auto', // Supports all file types
+            });
+            submissionLink = uploadResult.secure_url;
         }
 
         const newAssignment = await Assignment.create({
@@ -41,7 +53,7 @@ export const getAssignmentsByCourse = async (req, res) => {
         }
 
         // Fetch assignments related to the course
-        const assignments = await Assignment.find({ course: courseId });
+        const assignments = await Assignment.find({ course: courseId }).select('title description dueDate submissionLink submissions');
 
         res.status(200).json({ assignments });
     } catch (error) {
@@ -51,7 +63,7 @@ export const getAssignmentsByCourse = async (req, res) => {
 
 export const submitAssignment = async (req, res) => {
     const { courseId, assignmentId } = req.params; // Extract courseId and assignmentId from URL parameters
-    const { submissionLink } = req.body; // Extract submission link from request body
+    const studentId = req.user.id;
 
     try {
         // Find the course to ensure it exists
@@ -66,8 +78,31 @@ export const submitAssignment = async (req, res) => {
             return res.status(404).json({ message: 'Assignment not found' });
         }
 
+        let submissionLink = null;
+
+        // Handle file upload to Cloudinary
+        if (req.file) {
+            const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'media',
+                resource_type: 'auto', // Supports all file types
+            });
+            submissionLink = uploadResult.secure_url;
+        }
+
+        const existingSubmission = assignment.submissions.find(submission => submission.student.toString() === studentId);
+
+        if (existingSubmission) {
+            // If the student has already submitted, update the submission link and the submittedAt timestamp
+            existingSubmission.link = submissionLink;
+            existingSubmission.submittedAt = new Date(); // Update submission time
+
+            await assignment.save();
+
+            return res.status(200).json({ message: 'Assignment updated successfully', assignment });
+        }
+
         // Update the assignment with the submission link (you may want to store student submissions separately)
-        assignment.submissionLink = submissionLink; // Assuming you have a field to store submission link in the Assignment model
+        assignment.submissions.push({ student: studentId, link: submissionLink, submittedAt: new Date(),});
         await assignment.save();
 
         res.status(200).json({ message: 'Assignment submitted successfully', assignment });
@@ -102,8 +137,19 @@ export const deleteAssignment = async (req, res) => {
 export const updateAssignment = async (req, res) => {
     const { assignmentId } = req.params;
     const updates = req.body; // Capture the fields to update from the request body
+    let submissionLink = null;
 
     try {
+        if (req.file) {
+            const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'media',
+                resource_type: 'auto', // Supports all file types
+            });
+            submissionLink = uploadResult.secure_url;
+
+            // Add the uploaded file's URL to the updates object
+            updates.submissionLink = submissionLink;
+        }
         // Find the assignment by ID and update it with the provided fields
         const updatedAssignment = await Assignment.findByIdAndUpdate(assignmentId, updates, {
             new: true, // Return the updated document

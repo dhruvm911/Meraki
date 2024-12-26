@@ -35,6 +35,9 @@ import AllChats from './components/AllChats';
 import UnreadMessages from './components/UnreadMessages';
 import AddReview from './components/AddReview';
 import AddLecture from './components/AddLecture';
+import AddAssignment from './components/AddAssignment';
+import MyAssignment from './components/MyAssignment';
+import MyAssignmentsInstructor from './components/MyAssignmentInstructor';
 
 
 
@@ -143,6 +146,12 @@ function App() {
             <Route path="/addreview/:courseId" element={<AddReview />} />
 
             <Route path="/add-lecture/:courseId" element={<AddLecture />} />
+
+            <Route path="/add-assignment/:courseId" element={<AddAssignment />} />
+
+            <Route path="/assignments/:courseId" element={<MyAssignment />} />
+
+            <Route path="/assignment/:courseId" element={<MyAssignmentsInstructor />} />
 
 
             <Route path="/course/:id" element={

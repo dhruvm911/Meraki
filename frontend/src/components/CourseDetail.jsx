@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const CourseDetail = () => {
     const [course, setCourse] = useState(null);
@@ -269,6 +269,12 @@ const CourseDetail = () => {
                     <p>No reviews yet</p>
                 )}
             </div>
+            <Link
+                to={`/assignment/${id}`}
+                className="fixed bottom-6 left-6 bg-purple-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-green-600 transition duration-200"
+            >
+                View Assignments
+            </Link>
 
         </div>
 

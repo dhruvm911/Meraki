@@ -206,6 +206,12 @@ const MyCourseDetail = () => {
             >
                 Review this course
             </Link>
+            <Link
+                to={`/assignments/${courseId}`}
+                className="fixed bottom-6 left-48 bg-purple-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-green-600 transition duration-200"
+            >
+                Assignments
+            </Link>
         </div>
     );
 };
