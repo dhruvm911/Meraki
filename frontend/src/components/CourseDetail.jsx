@@ -132,8 +132,8 @@ const CourseDetail = () => {
     };
 
     // Handle add video
-    const handleAddVideo = () => {
-        navigate(`/add-video/${id}`);  // Navigate to add video page
+    const handleAddLecture = () => {
+        navigate(`/add-lecture/${id}`);  // Navigate to add video page
     };
 
     // Handle add assignment
@@ -179,10 +179,10 @@ const CourseDetail = () => {
                         Edit Course
                     </button>
                     <button
-                        onClick={handleAddVideo}
+                        onClick={handleAddLecture}
                         className="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-700"
                     >
-                        Add Video
+                        Add Lecture
                     </button>
                     <button
                         onClick={handleAddAssignment}

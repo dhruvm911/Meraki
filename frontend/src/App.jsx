@@ -34,6 +34,7 @@ import MyChat from './components/MyChat';
 import AllChats from './components/AllChats';
 import UnreadMessages from './components/UnreadMessages';
 import AddReview from './components/AddReview';
+import AddLecture from './components/AddLecture';
 
 
 
@@ -140,6 +141,8 @@ function App() {
             {/* <Route path="mychat/:courseId/:studentId" element={<MyIChat />} /> */}
 
             <Route path="/addreview/:courseId" element={<AddReview />} />
+
+            <Route path="/add-lecture/:courseId" element={<AddLecture />} />
 
 
             <Route path="/course/:id" element={
