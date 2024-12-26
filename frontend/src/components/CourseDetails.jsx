@@ -9,6 +9,7 @@ const CourseDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
+    const [showAllReviews, setShowAllReviews] = useState(false);
 
     useEffect(() => {
         const fetchCourseDetails = async () => {
@@ -36,7 +37,7 @@ const CourseDetails = () => {
         const fetchCourseReviews = async () => {
             try {
                 const token = localStorage.getItem('authToken');
-                const response = await fetch(`http://localhost:5000/api/v1/review/${courseId}`, {
+                const response = await fetch(`http://localhost:5000/api/v1/reviews/${courseId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -57,6 +58,27 @@ const CourseDetails = () => {
         fetchCourseDetails();
         fetchCourseReviews();
     }, [courseId]);
+
+    const calculateAverageRating = () => {
+        if (reviews.length === 0) return 0;
+        const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+        return (totalRating / reviews.length).toFixed(1);
+    };
+
+    const renderStars = (rating) => {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            if (i <= rating) {
+                stars.push(<span key={i} className="text-yellow-500">&#9733;</span>); // Full star
+            } else if (i - rating < 1) {
+                stars.push(<span key={i} className="text-yellow-500">&#9734;</span>); // Half star
+            } else {
+                stars.push(<span key={i} className="text-gray-400">&#9734;</span>); // Empty star
+            }
+        }
+        return stars;
+    };
+
 
     const handleAddToCart = async () => {
         try {
@@ -158,31 +180,54 @@ const CourseDetails = () => {
                         Instructor: <span className="font-semibold">{course.instructor?.fullName || 'Unknown'}</span>
                     </p>
 
-                    <div className="mb-6">
-                        <h3 className="text-xl font-semibold mb-2">Reviews</h3>
-                        {reviews.length > 0 ? (
-                            <div>
-                                {reviews.map((review) => (
-                                    <div key={review._id} className="border-b mb-4 pb-4">
-                                        <p className="text-sm font-semibold">{review.student?.fullName}</p>
-                                        <p className="text-gray-600">{review.comment}</p>
-                                        <p className="text-sm text-yellow-500">
-                                            Rating: {review.rating} / 5
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p>No reviews yet</p>
-                        )}
-                    </div>
-
                     <button
                         onClick={handleAddToCart}
                         className="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
                     >
                         Add to Cart
                     </button>
+
+                    <div className="mb-6">
+                        <h3 className="text-2xl font-bold mb-2 py-2">
+                            Rating: {calculateAverageRating()} <span>&#9733;</span>
+                        </h3>
+                        <div className="flex mb-4 text-2xl">{renderStars(calculateAverageRating())}</div>
+                        <h3 className="text-xl font-semibold mb-2">Reviews</h3>
+                        {reviews.length > 0 ? (
+                            <>
+                                {(showAllReviews ? reviews : reviews.slice(0, 5)).map((review) => (
+                                    <div key={review._id} className="border-b mb-4 pb-4 flex items-center">
+                                        {review.student?.profilePhoto && (
+                                            <img
+                                                src={review.student.profilePhoto}
+                                                alt={review.student.fullName}
+                                                className="w-10 h-10 rounded-full mr-4"
+                                            />
+                                        )}
+                                        
+                                        <div>
+                                            <p className="text-sm font-semibold">{review.student?.fullName}</p>
+                                            <div className="flex">{renderStars(review.rating)}</div>
+                                            <p className="text-gray-600">{review.comment}</p>
+                                            
+                                        </div>
+                                    </div>
+                                ))}
+                                {reviews.length > 5 && !showAllReviews && (
+                                    <button
+                                        onClick={() => setShowAllReviews(true)}
+                                        className="text-blue-500 hover:underline"
+                                    >
+                                        View More
+                                    </button>
+                                )}
+                            </>
+                        ) : (
+                            <p>No reviews yet</p>
+                        )}
+                    </div>
+
+                    
                 </>
             ) : (
                 <p>Course not found</p>

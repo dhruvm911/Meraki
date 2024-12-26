@@ -200,6 +200,12 @@ const MyCourseDetail = () => {
             >
                 {unreadMessagesCount > 0 ? `Unread messages (${unreadMessagesCount})` : 'Ask a doubt'}
             </Link>
+            <Link
+                to={`/addreview/${courseId}`}
+                className="fixed bottom-6 left-6 bg-green-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-green-600 transition duration-200"
+            >
+                Review this course
+            </Link>
         </div>
     );
 };

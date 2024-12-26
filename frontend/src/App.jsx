@@ -33,6 +33,7 @@ import MyCourseDetail from './components/MyCourseDetail';
 import MyChat from './components/MyChat';
 import AllChats from './components/AllChats';
 import UnreadMessages from './components/UnreadMessages';
+import AddReview from './components/AddReview';
 
 
 
@@ -137,6 +138,8 @@ function App() {
             <Route path="/all-chats/:courseId" element={<AllChats />} />
 
             {/* <Route path="mychat/:courseId/:studentId" element={<MyIChat />} /> */}
+
+            <Route path="/addreview/:courseId" element={<AddReview />} />
 
 
             <Route path="/course/:id" element={

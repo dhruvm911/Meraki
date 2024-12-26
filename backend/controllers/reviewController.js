@@ -1,39 +1,6 @@
 import { Review } from '../models/reviewSchema.js';
 import { Course } from '../models/courseSchema.js';
 
-// export const addReview = async (req, res) => {
-//     const { courseId, rating, comment } = req.body;
-//     const studentId = req.user._id; // Assuming the user is authenticated
-
-//     try {
-//         // Check if the course exists
-//         const course = await Course.findById(courseId);
-//         if (!course) {
-//             return res.status(404).json({ message: 'Course not found' });
-//         }
-
-//         // Check if the student has already reviewed this course
-//         const existingReview = await Review.findOne({ course: courseId, student: studentId });
-//         if (existingReview) {
-//             return res.status(400).json({ message: 'You have already reviewed this course' });
-//         }
-
-//         // Create a new review
-//         const newReview = new Review({
-//             course: courseId,
-//             student: studentId,
-//             rating,
-//             comment
-//         });
-
-//         // Save the review and respond
-//         await newReview.save();
-//         res.status(201).json({ message: 'Review added successfully', review: newReview });
-//     } catch (error) {
-//         res.status(500).json({ message: 'Error adding review', error: error.message });
-//     }
-// };
-
 export const addReview = async (req, res) => {
     const { courseId } = req.params;
     const { rating, comment } = req.body;
@@ -60,8 +27,14 @@ export const addReview = async (req, res) => {
         });
         await review.save();
 
-        // Add review to the course's reviews array
-        await Course.findByIdAndUpdate(courseId, { $push: { reviews: review._id } });
+        course.reviews.push(review._id);
+
+        // Calculate and update the average rating
+        const reviews = await Review.find({ course: courseId });
+        const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+        course.averageRating = averageRating;
+
+        await course.save();
 
         res.status(201).json({ message: 'Review added successfully', review });
     } catch (error) {
@@ -77,7 +50,7 @@ export const getCourseReviews = async (req, res) => {
         // Find course and populate its reviews
         const course = await Course.findById(courseId).populate({
             path: 'reviews',
-            populate: { path: 'student', select: 'fullName' }, // Populate student details in reviews
+            populate: { path: 'student', select: 'fullName profilePhoto' }, // Populate student details in reviews
         });
 
         if (!course) {
@@ -108,6 +81,11 @@ export const updateReview = async (req, res) => {
             return res.status(404).json({ message: 'Review not found or unauthorized' });
         }
 
+        // Recalculate the average rating for the course
+        const reviews = await Review.find({ course: review.course });
+        const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+        await Course.findByIdAndUpdate(review.course, { averageRating });
+
         res.status(200).json({ message: 'Review updated successfully', review });
     } catch (error) {
         res.status(500).json({ message: 'Error updating review', error: error.message });
@@ -130,6 +108,13 @@ export const deleteReview = async (req, res) => {
 
         // Remove the review from the course's reviews array
         await Course.findByIdAndUpdate(courseId, { $pull: { reviews: reviewId } });
+
+        const reviews = await Review.find({ course: courseId });
+        const averageRating = reviews.length
+            ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+            : 0;
+        await Course.findByIdAndUpdate(courseId, { averageRating });
+
 
         res.status(200).json({ message: 'Review deleted successfully' });
     } catch (error) {
