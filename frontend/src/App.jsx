@@ -46,6 +46,8 @@ function App() {
     <AuthProvider>
       <Router>
         <div className='w-full min-h-screen bg-zinc-900  text-white'>
+
+          
           {/* <Navbar /> */}
           <Routes>
             {/* Home route */}
