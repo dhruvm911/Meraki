@@ -6,7 +6,6 @@
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Setup and Installation](#setup-and-installation)
-- [Contributing](#contributing)
 
 ## Features
 
