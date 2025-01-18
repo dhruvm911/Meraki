@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TEInput, TERipple } from "tw-elements-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
@@ -49,6 +48,7 @@ export default function LoginForm() {
       console.error("Error:", error);
     }
   };
+
   return (
     <section className="min-h-screen pt-24 bg-dark text-white">
       {/* Added `pt-24` for extra spacing from navbar */}
@@ -70,21 +70,15 @@ export default function LoginForm() {
             {/* Social Login */}
             <div className="flex flex-row items-center justify-center lg:justify-start mb-6">
               <p className="mr-4 text-lg">Sign in with</p>
-              <TERipple rippleColor="light">
-                <button type="button" className="mx-1 h-9 w-9 rounded-full bg-blue-600 flex items-center justify-center text-white">
-                  {/* Add SVG for Facebook icon here */}
-                </button>
-              </TERipple>
-              <TERipple rippleColor="light">
-                <button type="button" className="mx-1 h-9 w-9 rounded-full bg-blue-400 flex items-center justify-center text-white">
-                  {/* Add SVG for Twitter icon here */}
-                </button>
-              </TERipple>
-              <TERipple rippleColor="light">
-                <button type="button" className="mx-1 h-9 w-9 rounded-full bg-blue-800 flex items-center justify-center text-white">
-                  {/* Add SVG for LinkedIn icon here */}
-                </button>
-              </TERipple>
+              <button type="button" className="mx-1 h-9 w-9 rounded-full bg-blue-600 flex items-center justify-center text-white">
+                {/* Add SVG for Facebook icon here */}
+              </button>
+              <button type="button" className="mx-1 h-9 w-9 rounded-full bg-blue-400 flex items-center justify-center text-white">
+                {/* Add SVG for Twitter icon here */}
+              </button>
+              <button type="button" className="mx-1 h-9 w-9 rounded-full bg-blue-800 flex items-center justify-center text-white">
+                {/* Add SVG for LinkedIn icon here */}
+              </button>
             </div>
 
             {/* Divider */}
@@ -96,24 +90,22 @@ export default function LoginForm() {
 
             {/* Input Fields */}
             <div className="relative mb-6">
-              <TEInput
+              <input
                 type="email"
                 placeholder="Email address"
-                size="lg"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
+                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800 w-full px-4 py-3 rounded-lg"
               />
             </div>
 
             <div className="relative mb-6">
-              <TEInput
+              <input
                 type="password"
                 placeholder="Password"
-                size="lg"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
+                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800 w-full px-4 py-3 rounded-lg"
               />
             </div>
 

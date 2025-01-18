@@ -1,14 +1,15 @@
-import React from 'react'
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/navbar'
-import LandingPage from './components/LandingPage'
-import Marquee from './components/Marquee'
-import About from './components/About'
-import Eyes from './components/eyes'
-import Featured from './components/Featured'
-import Cards from './components/Cards'
-import Footer from './components/Footer'
-import LoginForm from './components/LoginForm'
+import Navbar from './components/Navbar';
+import LandingPage from './components/LandingPage';
+import Marquee from './components/Marquee';
+import About from './components/About';
+import Eyes from './components/eyes';
+import Featured from './components/Featured';
+import Cards from './components/Cards';
+import Footer from './components/Footer';
+import Foot from './components/Foot';
+import LoginForm from './components/LoginForm';
 import LoginTwo from './components/LoginTwo';
 import AboutUs from './components/AboutUs';
 import SignUp from './components/SignUp';
@@ -40,15 +41,19 @@ import MyAssignment from './components/MyAssignment';
 import MyAssignmentsInstructor from './components/MyAssignmentInstructor';
 
 
+import Features from './components/Features';
+import Testimonials from './components/Testimonials';
+import Pricing from './components/Pricing';
+import Checking from './components/Checking';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import InstructorD from './components/InstructorD';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className='w-full min-h-screen bg-zinc-900  text-white'>
-          {/* <Navbar /> */}
+        <div className="w-full min-h-screen bg-zinc-900 text-white">
           <Routes>
-            {/* Home route */}
             <Route path="/" element={
               <>
                 <Navbar />
@@ -57,15 +62,26 @@ function App() {
                 <About />
                 <Eyes />
                 <Featured />
-                <Cards />
+                <Testimonials />
+                
+                
                 <Footer />
-                <SignUp />
-
+                
+               
+                {/* <Pricing /> */}
+                <Foot />
+               
+                
+                {/* <Instruct />
+                <MyCourses /> */}
               </>
             } />
+
             <Route path="/home" element={
               <>
                 <NavbarTwo />
+                <Checking />
+                <Features />
                 <CoursesList />
               </>
             } />
@@ -131,6 +147,11 @@ function App() {
                 <SearchResults />
               </>
             } />
+            <Route path="/privacy" element={
+              <>
+              <PrivacyPolicy />
+              </>
+            }/>
 
             <Route path="/courses/:courseId" element={<CourseDetails />} />
 
@@ -168,40 +189,23 @@ function App() {
               </>
             } />
 
-            <Route
-              path="/instructor"
-              element={
-                <ProtectedRoute allowedRoles={['instructor']}>
-                  <NavbarThree />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route path="/about-us" element={
-              <>
-                <Navbar />
-                <AboutUs />
-              </>
-            } /> {/* About Us Route */}
-            <Route path="/login" element={
-              <>
-                <Navbar />
-                <LoginForm />
-              </>
+            <Route path="/instructor" element={
+              <ProtectedRoute allowedRoles={['instructor']}>
+                <NavbarThree />
+                <InstructorD/>
+              </ProtectedRoute>
             } />
-            <Route path="/loginTwo" element={
-              <>
-                <Navbar />
-                <LoginTwo />
-              </>
-            } /> {/* For Instructor */}
+
+            <Route path="/about-us" element={<><Navbar /><AboutUs /></>} />
+            <Route path="/login" element={<><Navbar /><LoginForm /></>} />
+            <Route path="/loginTwo" element={<><Navbar /><LoginTwo /></>} />
             <Route path="/footer" element={<Footer />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>
         </div>
       </Router>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;

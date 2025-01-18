@@ -160,123 +160,124 @@ const CourseDetail = () => {
     }
 
     return (
-        <div className="container mx-auto p-4">
-            <h2 className="text-3xl font-bold mb-6">{course.title}</h2>
+        <div className="container mx-auto p-4 bg-black text-white">
+    <h2 className="text-4xl font-extrabold mb-6 text-orange-500">{course.title}</h2>
 
-            <div className="flex space-x-6 mb-6">
-                {/* Buttons section */}
-                <div className="flex flex-col space-y-4">
-                    <button
-                        onClick={handleDeleteCourse}
-                        className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-700"
-                    >
-                        Delete Course
-                    </button>
-                    <button
-                        onClick={handleEditCourse}
-                        className="py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-700"
-                    >
-                        Edit Course
-                    </button>
-                    <button
-                        onClick={handleAddLecture}
-                        className="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-700"
-                    >
-                        Add Lecture
-                    </button>
-                    <button
-                        onClick={handleAddAssignment}
-                        className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
-                    >
-                        Add Assignment
-                    </button>
-                    <button
-                        onClick={handleEnrolledStudents}
-                        className="py-2 px-4 bg-indigo-500 text-white rounded-lg hover:bg-indigo-700"
-                    >
-                        Enrolled Students
-                    </button>
-                </div>
-
-                {/* Course details section */}
-                <div className="flex-1">
-                    <div className="mb-4">
-                        <h3 className="text-lg font-semibold">Description</h3>
-                        <p className="text-gray-700">{course.description}</p>
-                    </div>
-
-                    <div className="mb-4">
-                        <h3 className="text-lg font-semibold">Category</h3>
-                        <p className="text-gray-600">{course.category}</p>
-                    </div>
-
-                    <div className="mb-4">
-                        <h3 className="text-lg font-semibold">Price</h3>
-                        <p className="text-gray-600">₹{course.price}</p>
-                    </div>
-
-                    <div className="mb-4">
-                        <h3 className="text-lg font-semibold">Created By</h3>
-                        <p className="text-gray-600">{course.instructor.fullName}</p>
-                    </div>
-                </div>
-            </div>
-            {/* Floating Orange Button */}
-            <div className="fixed bottom-4 right-4">
-                <button
-                    onClick={handleChatNavigation}
-                    className="bg-orange-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-orange-700"
-                >
-                    {unreadCount > 0 ? `Unread Messages (${unreadCount})` : 'Messages'}
-                </button>
-            </div>
-            <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-2 py-2">
-                    Rating: {calculateAverageRating()} <span>&#9733;</span>
-                </h3>
-                <div className="flex mb-4 text-2xl">{renderStars(calculateAverageRating())}</div>
-                <h3 className="text-xl font-semibold mb-2">Reviews</h3>
-                {reviews.length > 0 ? (
-                    <>
-                        {(showAllReviews ? reviews : reviews.slice(0, 5)).map((review) => (
-                            <div key={review._id} className="border-b mb-4 pb-4 flex items-center">
-                                {review.student?.profilePhoto && (
-                                    <img
-                                        src={review.student.profilePhoto}
-                                        alt={review.student.fullName}
-                                        className="w-10 h-10 rounded-full mr-4"
-                                    />
-                                )}
-
-                                <div>
-                                    <p className="text-sm font-semibold">{review.student?.fullName}</p>
-                                    <div className="flex">{renderStars(review.rating)}</div>
-                                    <p className="text-gray-600">{review.comment}</p>
-
-                                </div>
-                            </div>
-                        ))}
-                        {reviews.length > 5 && !showAllReviews && (
-                            <button
-                                onClick={() => setShowAllReviews(true)}
-                                className="text-blue-500 hover:underline"
-                            >
-                                View More
-                            </button>
-                        )}
-                    </>
-                ) : (
-                    <p>No reviews yet</p>
-                )}
-            </div>
-            <Link
-                to={`/assignment/${id}`}
-                className="fixed bottom-6 left-6 bg-purple-500 text-white py-2 px-4 rounded-full shadow-lg hover:bg-green-600 transition duration-200"
+    <div className="flex space-x-6 mb-6">
+        {/* Buttons section */}
+        <div className="flex flex-col space-y-4">
+            <button
+                onClick={handleDeleteCourse}
+                className="py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-800 transition"
             >
-                View Assignments
-            </Link>
-
+                Delete Course
+            </button>
+            <button
+                onClick={handleEditCourse}
+                className="py-2 px-4 bg-orange-600 text-white rounded-lg hover:bg-orange-800 transition"
+            >
+                Edit Course
+            </button>
+            <button
+                onClick={handleAddLecture}
+                className="py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-800 transition"
+            >
+                Add Lecture
+            </button>
+            <button
+                onClick={handleAddAssignment}
+                className="py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition"
+            >
+                Add Assignment
+            </button>
+            <button
+                onClick={handleEnrolledStudents}
+                className="py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-800 transition"
+            >
+                Enrolled Students
+            </button>
         </div>
+
+        {/* Course details section */}
+        <div className="flex-1 p-4 bg-gray-800 rounded-lg shadow-lg">
+            <div className="mb-4">
+                <h3 className="text-xl font-semibold text-orange-400">Description</h3>
+                <p className="text-gray-300">{course.description}</p>
+            </div>
+
+            <div className="mb-4">
+                <h3 className="text-xl font-semibold text-orange-400">Category</h3>
+                <p className="text-gray-300">{course.category}</p>
+            </div>
+
+            <div className="mb-4">
+                <h3 className="text-xl font-semibold text-orange-400">Price</h3>
+                <p className="text-gray-300">₹{course.price}</p>
+            </div>
+
+            <div className="mb-4">
+                <h3 className="text-xl font-semibold text-orange-400">Created By</h3>
+                <p className="text-gray-300">{course.instructor.fullName}</p>
+            </div>
+        </div>
+    </div>
+
+    {/* Floating Orange Button */}
+    <div className="fixed bottom-4 right-4">
+        <button
+            onClick={handleChatNavigation}
+            className="bg-orange-500 text-black py-2 px-4 rounded-full shadow-lg hover:bg-orange-700"
+        >
+            {unreadCount > 0 ? `Unread Messages (${unreadCount})` : 'Messages'}
+        </button>
+    </div>
+
+    <div className="mb-6">
+        <h3 className="text-2xl font-bold mb-2 py-2">
+            Rating: {calculateAverageRating()} <span>&#9733;</span>
+        </h3>
+        <div className="flex mb-4 text-2xl">{renderStars(calculateAverageRating())}</div>
+        <h3 className="text-xl font-semibold mb-2">Reviews</h3>
+        {reviews.length > 0 ? (
+            <>
+                {(showAllReviews ? reviews : reviews.slice(0, 5)).map((review) => (
+                    <div key={review._id} className="border-b border-gray-700 mb-4 pb-4 flex items-center">
+                        {review.student?.profilePhoto && (
+                            <img
+                                src={review.student.profilePhoto}
+                                alt={review.student.fullName}
+                                className="w-10 h-10 rounded-full mr-4"
+                            />
+                        )}
+
+                        <div>
+                            <p className="text-sm font-semibold">{review.student?.fullName}</p>
+                            <div className="flex">{renderStars(review.rating)}</div>
+                            <p className="text-gray-400">{review.comment}</p>
+                        </div>
+                    </div>
+                ))}
+                {reviews.length > 5 && !showAllReviews && (
+                    <button
+                        onClick={() => setShowAllReviews(true)}
+                        className="text-orange-400 hover:underline"
+                    >
+                        View More
+                    </button>
+                )}
+            </>
+        ) : (
+            <p>No reviews yet</p>
+        )}
+    </div>
+    <Link
+        to={`/assignment/${id}`}
+        className="fixed bottom-6 left-6 bg-purple-600 text-white py-2 px-4 rounded-full shadow-lg hover:bg-purple-800 transition duration-200"
+    >
+        View Assignments
+    </Link>
+</div>
+
 
     );
 };

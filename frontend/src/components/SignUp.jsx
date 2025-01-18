@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TEInput, TERipple } from "tw-elements-react";
 
 export default function SignUpForm() {
   const [userType, setUserType] = useState("student");
@@ -14,7 +13,7 @@ export default function SignUpForm() {
     window.location.href = "http://localhost:5000/api/v1/auth/google";
   };
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,38 +41,30 @@ export default function SignUpForm() {
 
       const data = await response.json();
 
-      
-      
       if (response.ok) {
         alert("Registration successful!");
-        // Redirect or update UI as needed
-
         // Redirect based on user role
         if (userType === "student") {
-          navigate("/login");  // Assuming LoginForm is at "/login"
+          navigate("/login");
         } else if (userType === "instructor") {
-          navigate("/loginTwo");  // Assuming LoginTwo is at "/login-two"
+          navigate("/loginTwo");
         }
       } else {
         if (data.errors) {
-          // Extracting all the `msg` properties from the errors array
-          const errorMessages = data.errors.map(error => error.msg).join(", ");
+          const errorMessages = data.errors.map((error) => error.msg).join(", ");
           setErrorMessage(errorMessages);
         } else {
           setErrorMessage(data.message || "An error occurred during registration.");
         }
-        
       }
     } catch (error) {
       setErrorMessage("Failed to register. Please try again.");
     }
   };
 
-
   return (
     <section className="min-h-screen pt-24 bg-dark text-white">
       <div className="container mx-auto flex flex-col lg:flex-row items-center justify-center min-h-full">
-        
         {/* Image Section */}
         <div className="w-full lg:w-1/2 flex justify-center items-center p-8">
           <img
@@ -85,26 +76,20 @@ export default function SignUpForm() {
 
         {/* Form Section */}
         <div className="w-full lg:w-1/2 flex justify-center items-center p-4">
-          <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm"> {/* Reduced max width */}
-            
+          <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
             {/* Social Sign Up */}
             <div className="flex flex-row items-center justify-center lg:justify-start mb-4">
               <p className="mr-4 text-lg">Sign up with</p>
-              <TERipple rippleColor="light">
-                <button type="button" className="mx-1 h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
-                  {/* Add SVG for Facebook icon here */}
-                </button>
-              </TERipple>
-              <TERipple rippleColor="light">
-                <button type="button" className="mx-1 h-8 w-8 rounded-full bg-blue-400 flex items-center justify-center text-white">
-                  {/* Add SVG for Twitter icon here */}
-                </button>
-              </TERipple>
-              <TERipple rippleColor="light">
-                <button type="button" className="mx-1 h-8 w-8 rounded-full bg-blue-800 flex items-center justify-center text-white">
-                  {/* Add SVG for LinkedIn icon here */}
-                </button>
-              </TERipple>
+              {/* Social Media Buttons */}
+              <button type="button" className="mx-1 h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
+                {/* Add SVG for Facebook icon */}
+              </button>
+              <button type="button" className="mx-1 h-8 w-8 rounded-full bg-blue-400 flex items-center justify-center text-white">
+                {/* Add SVG for Twitter icon */}
+              </button>
+              <button type="button" className="mx-1 h-8 w-8 rounded-full bg-blue-800 flex items-center justify-center text-white">
+                {/* Add SVG for LinkedIn icon */}
+              </button>
             </div>
 
             {/* Divider */}
@@ -116,42 +101,42 @@ export default function SignUpForm() {
 
             {/* Input Fields */}
             <div className="relative mb-4">
-              <TEInput
+              <input
                 type="text"
                 placeholder="Full Name"
-                value={fullName} onChange={(e) => setFullName(e.target.value)}
-                size="lg"
-                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800 w-full py-2 px-3 rounded"
               />
             </div>
 
             <div className="relative mb-4">
-              <TEInput
+              <input
                 type="email"
                 placeholder="Email address"
-                value={email} onChange={(e) => setEmail(e.target.value)}
-                size="lg"
-                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800 w-full py-2 px-3 rounded"
               />
             </div>
 
             <div className="relative mb-4">
-              <TEInput
+              <input
                 type="password"
                 placeholder="Password"
-                value={password} onChange={(e) => setPassword(e.target.value)}
-                size="lg"
-                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800 w-full py-2 px-3 rounded"
               />
             </div>
 
             <div className="relative mb-4">
-              <TEInput
+              <input
                 type="password"
                 placeholder="Confirm Password"
-                value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
-                size="lg"
-                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800 w-full py-2 px-3 rounded"
               />
             </div>
 
@@ -192,18 +177,13 @@ export default function SignUpForm() {
             </button>
 
             {/* Google Login Button */}
-        <TERipple rippleColor="light">
-          <button
-            type="button"
-            className="mx-1 h-8 w-8 rounded-full bg-red-500 flex items-center justify-center text-white"
-            onClick={handleGoogleLogin}
-          >
-            G
-          </button>
-        </TERipple>
-
-            {/* Login Link */}
-           
+            <button
+              type="button"
+              className="mx-1 h-8 w-8 rounded-full bg-red-500 flex items-center justify-center text-white"
+              onClick={handleGoogleLogin}
+            >
+              G
+            </button>
           </form>
         </div>
       </div>

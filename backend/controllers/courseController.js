@@ -135,11 +135,12 @@ export const updateCourse = async (req, res) => {
 
 
 export const deleteCourse = async (req, res) => {
-    const { id } = req.params; // Extract the course ID from request parameters
+    const { courseId } = req.params; // Extract the course ID from request parameters
+    console.log(req.params);
 
     try {
         // Find the course by ID and remove it
-        const deletedCourse = await Course.findByIdAndDelete(id);
+        const deletedCourse = await Course.findByIdAndDelete(courseId);
 
         // Check if the course exists
         if (!deletedCourse) {

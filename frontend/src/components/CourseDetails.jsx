@@ -158,81 +158,84 @@ const CourseDetails = () => {
     if (error) return <p>{error}</p>;
 
     return (
-        <div className="container mx-auto p-4">
-            {course ? (
-                <>
-                    {course.thumbnail && (
-                            <img
-                                src={course.thumbnail}
-                                alt={course.title}
-                                className="w-full h-40 object-cover rounded mb-4"
-                            />
-                        )}
-                    <h2 className="text-3xl font-bold mb-6">{course.title}</h2>
-                    <p className="text-lg mb-4">{course.description}</p>
-                    <p className="text-sm text-gray-600 mb-2">
-                        Category: <span className="font-semibold">{course.category}</span>
-                    </p>
-                    <p className="text-sm text-gray-600 mb-4">
-                        Price: <span className="font-semibold">₹{course.price}</span>
-                    </p>
-                    <p className="text-sm text-gray-600 mb-4">
-                        Instructor: <span className="font-semibold">{course.instructor?.fullName || 'Unknown'}</span>
-                    </p>
-
-                    <button
-                        onClick={handleAddToCart}
-                        className="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
-                    >
-                        Add to Cart
-                    </button>
-
-                    <div className="mb-6">
-                        <h3 className="text-2xl font-bold mb-2 py-2">
-                            Rating: {calculateAverageRating()} <span>&#9733;</span>
-                        </h3>
-                        <div className="flex mb-4 text-2xl">{renderStars(calculateAverageRating())}</div>
-                        <h3 className="text-xl font-semibold mb-2">Reviews</h3>
-                        {reviews.length > 0 ? (
-                            <>
-                                {(showAllReviews ? reviews : reviews.slice(0, 5)).map((review) => (
-                                    <div key={review._id} className="border-b mb-4 pb-4 flex items-center">
-                                        {review.student?.profilePhoto && (
-                                            <img
-                                                src={review.student.profilePhoto}
-                                                alt={review.student.fullName}
-                                                className="w-10 h-10 rounded-full mr-4"
-                                            />
-                                        )}
-                                        
-                                        <div>
-                                            <p className="text-sm font-semibold">{review.student?.fullName}</p>
-                                            <div className="flex">{renderStars(review.rating)}</div>
-                                            <p className="text-gray-600">{review.comment}</p>
-                                            
-                                        </div>
-                                    </div>
-                                ))}
-                                {reviews.length > 5 && !showAllReviews && (
-                                    <button
-                                        onClick={() => setShowAllReviews(true)}
-                                        className="text-blue-500 hover:underline"
-                                    >
-                                        View More
-                                    </button>
-                                )}
-                            </>
-                        ) : (
-                            <p>No reviews yet</p>
-                        )}
-                    </div>
-
-                    
-                </>
-            ) : (
-                <p>Course not found</p>
+        <div className="container mx-auto p-8 bg-neutral-900 text-neutral-200 rounded-xl shadow-lg">
+        {course ? (
+          <>
+            {course.thumbnail && (
+              <div className="w-full h-64 mb-8 overflow-hidden rounded-lg shadow-lg bg-neutral-800">
+                <img
+                  src={course.thumbnail}
+                  alt={course.title}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
             )}
-        </div>
+            <h2 className="text-4xl font-extrabold mb-6 tracking-wide text-white">{course.title}</h2>
+            <p className="text-lg mb-6 text-neutral-400">{course.description}</p>
+            
+            <div className="bg-neutral-800 p-6 rounded-lg mb-8 shadow-md">
+              <p className="text-md text-orange-400 mb-2">
+                Category: <span className="font-semibold text-white">{course.category}</span>
+              </p>
+              <p className="text-md text-orange-400 mb-4">
+                Price: <span className="font-semibold text-white">₹{course.price}</span>
+              </p>
+              <p className="text-md text-orange-400 mb-6">
+                Instructor: <span className="font-semibold text-white">{course.instructor?.fullName || 'Unknown'}</span>
+              </p>
+      
+              <button
+                onClick={handleAddToCart}
+                className="mt-4 inline-block px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-800 text-white font-bold rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105"
+              >
+                Add to Cart
+              </button>
+            </div>
+      
+            <div className="mt-8 mb-6">
+              <h3 className="text-2xl font-bold mb-4">
+                Rating: {calculateAverageRating()} <span className="text-orange-400">&#9733;</span>
+              </h3>
+              <div className="flex mb-6 text-2xl">{renderStars(calculateAverageRating())}</div>
+              
+              <h3 className="text-xl font-semibold mb-4 text-neutral-300">Reviews</h3>
+              {reviews.length > 0 ? (
+                <>
+                  {(showAllReviews ? reviews : reviews.slice(0, 5)).map((review) => (
+                    <div key={review._id} className="border-b border-neutral-800 mb-6 pb-4 flex items-start space-x-4 bg-neutral-800 p-4 rounded-lg shadow-md hover:bg-neutral-700 transition-colors">
+                      {review.student?.profilePhoto && (
+                        <img
+                          src={review.student.profilePhoto}
+                          alt={review.student.fullName}
+                          className="w-14 h-14 rounded-full shadow-md"
+                        />
+                      )}
+                      <div>
+                        <p className="text-md font-semibold text-neutral-100">{review.student?.fullName}</p>
+                        <div className="flex mb-1">{renderStars(review.rating)}</div>
+                        <p className="text-neutral-400">{review.comment}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {reviews.length > 5 && !showAllReviews && (
+                    <button
+                      onClick={() => setShowAllReviews(true)}
+                      className="text-orange-400 hover:underline transition-all"
+                    >
+                      View More
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p className="text-neutral-500">No reviews yet</p>
+              )}
+            </div>
+          </>
+        ) : (
+          <p className="text-neutral-500">Course not found</p>
+        )}
+      </div>
+
     );
 };
 
