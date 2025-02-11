@@ -11,13 +11,12 @@ const CartPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Fetch cart items when the component mounts
     useEffect(() => {
         const fetchCartItems = async () => {
             const token = localStorage.getItem('authToken');
             if (!token) {
                 console.error('User is not authenticated');
-                navigate('/login'); // Redirect to login if not authenticated
+                navigate('/login');
                 return;
             }
 
@@ -37,7 +36,6 @@ const CartPage = () => {
         fetchCartItems();
     }, [navigate]);
 
-    // Handle removing a course from the cart
     const handleRemoveCourse = async (courseId) => {
         const token = localStorage.getItem('authToken');
         if (!token) {
@@ -51,7 +49,6 @@ const CartPage = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            console.log(response.data.message);
             setCartItems(cartItems.filter(item => item._id !== courseId));
             setTotalAmount(totalAmount - response.data.removedCoursePrice);
         } catch (error) {
@@ -59,7 +56,6 @@ const CartPage = () => {
         }
     };
 
-    // Handle proceeding to payment
     const handleProceedToPay = async () => {
         if (cartItems.length === 0 || totalAmount <= 0) {
             alert('Your cart is empty. Please add items before proceeding to payment.');
@@ -69,7 +65,7 @@ const CartPage = () => {
         const userId = localStorage.getItem('userId');
         if (!userId) {
             console.error('User ID is missing');
-            navigate('/login'); // Redirect to login
+            navigate('/login');
             return;
         }
 
@@ -107,60 +103,62 @@ const CartPage = () => {
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
+        <div className="flex justify-center items-center min-h-screen bg-gray-900 text-gray-300">
+            <div className="max-w-lg w-full bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h1 className="text-2xl font-bold mb-6 text-center text-white">Your Cart</h1>
 
-            {isLoading ? (
-                <div className="text-center">
-                    <p className="text-gray-600">Processing payment, please wait...</p>
-                </div>
-            ) : cartItems.length === 0 ? (
-                <div className="text-center text-gray-600">
-                    <h2 className="text-xl font-semibold">Your cart is empty!</h2>
-                    <p className="text-gray-500">Add something and come back.</p>
-                    <button
-                        onClick={takeMeHome}
-                        className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
-                    >
-                        Home
-                    </button>
-                </div>
-            ) : (
-                <>
-                    <div className="space-y-4">
-                        {cartItems.map(course => (
-                            <div key={course._id} className="p-4 bg-white shadow-md rounded-lg flex items-center justify-between">
-                                <div>
-                                    <h2 className="text-xl text-black font-semibold">{course.title}</h2>
-                                    <p className="text-gray-600">
-                                        {course.description.length > 100
-                                            ? `${course.description.substring(0, 100)}...`
-                                            : course.description}
-                                    </p>
-                                    <p className="text-gray-500">Instructor: {course.instructor.fullName}</p>
-                                    <p className="text-gray-700 font-bold">₹{course.price}</p>
-                                </div>
-                                <button
-                                    onClick={() => handleRemoveCourse(course._id)}
-                                    className="p-2 bg-red-500 text-white rounded-full hover:bg-red-700"
-                                >
-                                    <i className="fa fa-trash"></i>
-                                </button>
-                            </div>
-                        ))}
+                {isLoading ? (
+                    <div className="text-center">
+                        <p className="text-gray-400">Processing payment, please wait...</p>
                     </div>
-
-                    <div className="mt-8 p-4 text-black bg-gray-100 rounded-lg shadow-md">
-                        <h2 className="text-xl font-bold">Total Amount: ₹{totalAmount}</h2>
+                ) : cartItems.length === 0 ? (
+                    <div className="text-center text-gray-400">
+                        <h2 className="text-xl font-semibold">Your cart is empty!</h2>
+                        <p>Add something and come back.</p>
                         <button
-                            onClick={handleProceedToPay}
-                            className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+                            onClick={takeMeHome}
+                            className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition"
                         >
-                            Proceed to Pay
+                            Home
                         </button>
                     </div>
-                </>
-            )}
+                ) : (
+                    <>
+                        <div className="space-y-4">
+                            {cartItems.map(course => (
+                                <div key={course._id} className="p-4 bg-gray-700 rounded-lg shadow flex items-center justify-between">
+                                    <div>
+                                        <h2 className="text-lg font-semibold text-white">{course.title}</h2>
+                                        <p className="text-sm text-gray-400">
+                                            {course.description.length > 100
+                                                ? `${course.description.substring(0, 100)}...`
+                                                : course.description}
+                                        </p>
+                                        <p className="text-sm text-gray-400">Instructor: {course.instructor.fullName}</p>
+                                        <p className="text-lg font-bold text-white">₹{course.price}</p>
+                                    </div>
+                                    <button
+                                        onClick={() => handleRemoveCourse(course._id)}
+                                        className="p-2 bg-red-500 text-white rounded-full hover:bg-red-700 transition"
+                                    >
+                                        <i className="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-8 p-4 bg-gray-700 rounded-lg shadow text-center">
+                            <h2 className="text-lg font-bold text-white">Total Amount: ₹{totalAmount}</h2>
+                            <button
+                                onClick={handleProceedToPay}
+                                className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition"
+                            >
+                                Proceed to Pay
+                            </button>
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
     );
 };
