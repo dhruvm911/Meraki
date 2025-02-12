@@ -19,11 +19,11 @@ function Featured() {
     });
   };
   return (
-    <div className="container w-full sm:pt-20 pt-10">
+    <div className="container w-full sm:pt-20 pt-10 justify-center items-center">
       <div className="w-full border-b-[1px] border-zinc-700 pb-5">
         <h1 className="text-4xl sm:text-6xl">Featured Courses</h1>
       </div>
-      <div className="py-10 cards w-full flex flex-col md:flex-row gap-10">
+      <div className="py-10 cards w-full flex flex-col md:flex-row gap-10 justify-center items-center">
         <motion.div
           onHoverStart={() => handleHoverStart(0)}
           onHoverEnd={() => handleHoverEnd(0)}

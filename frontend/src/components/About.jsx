@@ -7,6 +7,9 @@ function About() {
       <div className='w-full flex gap-5 border-t-[1px] border-[#a1b562] pt-10 mt-20'>
        <div className='w-1/2'>
        <h1 className='text-7xl'>Our Misson:</h1>
+       <p className="text-xl mt-4 text-gray-700">
+        Empowering learners of all ages through innovative, accessible, and engaging digital education. Our platform leverages technology to provide high-quality, personalized learning experiences that inspire curiosity, foster critical thinking, and prepare individuals for success in an ever-evolving world. We are committed to bridging the education gap by making knowledge available anytime, anywhere.
+       </p>
        <a href="/about-us">
   <button className="px-10 uppercase flex gap-10 items-center py-6 mt-10 bg-zinc-900 rounded-full text-white">
     Read More
