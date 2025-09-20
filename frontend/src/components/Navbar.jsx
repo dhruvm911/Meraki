@@ -5,7 +5,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // State to handle menu toggle on mobile
 
   return (
-    <div className='fixed z-[999] w-full px-6 md:px-20 py-4 md:py-8 font-serif flex justify-between items-center'>
+    <div className='fixed z-[999] w-full px-6 md:px-20  py-2 md:py-4  font-serif flex justify-between backdrop-blur-md bg-zinc-900/30 items-center'>
       {/* Logo */}
       <div className="logo">
       <svg width="192" height="41" viewBox="0 0 192 41" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-10 w-auto max-lg:h-6"><g clipPath="url(#clip0_221_195)">

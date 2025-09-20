@@ -1,9 +1,13 @@
 import React from 'react';
 import { FaLocationArrow } from "react-icons/fa6";
+import LocomotiveScroll from 'locomotive-scroll';
+import 'locomotive-scroll/dist/locomotive-scroll.css';  // Ensure styles are loaded
+
 
 function LandingPage() {
+  
   return (
-    <div className='w-full h-screen bg-zinc-900 pt-2'>
+    <div data-scroll-container className='w-full h-screen bg-zinc-900 pt-2'>
       {/* Text Section */}
       <div className="textstructure mt-20 md:mt-40 px-6 md:px-20">
         <div className="masker">

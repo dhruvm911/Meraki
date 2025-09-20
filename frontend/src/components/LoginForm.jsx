@@ -43,50 +43,87 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-900">
-      <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-gray-200 mb-4">Login</h2>
-        <form onSubmit={handleLogin} className="flex flex-col">
-          <input
-            type="email"
-            placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+    <section className="min-h-screen pt-24 bg-dark text-white">
+      {/* Added `pt-24` for extra spacing from navbar */}
+      <div className="container mx-auto flex flex-col lg:flex-row items-center justify-center min-h-full">
+
+        {/* Image Section */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center p-8">
+          <img
+            src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+            className="w-full max-w-md"
+            alt="Sample"
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-          />
-          {errorMessage && (
-            <div className="text-red-500 text-sm mb-4">{errorMessage}</div>
-          )}
-          <div className="flex items-center justify-between flex-wrap">
-            <label className="text-sm text-gray-200 cursor-pointer" htmlFor="remember-me">
-              <input className="mr-2" id="remember-me" type="checkbox" />
-              Remember me
-            </label>
-            <a className="text-sm text-blue-500 hover:underline mb-0.5" href="#">
-              Forgot password?
-            </a>
-          </div>
-          <p className="text-white mt-4">
-            Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-500 hover:underline">
-              Signup
-            </Link>
-          </p>
-          <button
-            type="submit"
-            className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
-          >
-            Login
-          </button>
-        </form>
+        </div>
+
+        {/* Form Section */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center p-8">
+          <form onSubmit={handleLogin} className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-md">
+
+            {/* Social Login */}
+            <div className="flex flex-row items-center justify-center lg:justify-start mb-6">
+              <p className="mr-4 text-lg">Sign in with</p>
+              <button type="button" className="mx-1 h-9 w-9 rounded-full bg-blue-600 flex items-center justify-center text-white">
+                {/* Add SVG for Facebook icon here */}
+              </button>
+              <button type="button" className="mx-1 h-9 w-9 rounded-full bg-blue-400 flex items-center justify-center text-white">
+                {/* Add SVG for Twitter icon here */}
+              </button>
+              <button type="button" className="mx-1 h-9 w-9 rounded-full bg-blue-800 flex items-center justify-center text-white">
+                {/* Add SVG for LinkedIn icon here */}
+              </button>
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center my-6">
+              <div className="flex-1 border-t border-neutral-600"></div>
+              <p className="px-4 text-center font-semibold">Or</p>
+              <div className="flex-1 border-t border-neutral-600"></div>
+            </div>
+
+            {/* Input Fields */}
+            <div className="relative mb-6">
+              <input
+                type="email"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800 w-full px-4 py-3 rounded-lg"
+              />
+            </div>
+
+            <div className="relative mb-6">
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-gray-800 w-full px-4 py-3 rounded-lg"
+              />
+            </div>
+
+            {/* Error Message */}
+            {errorMessage && (
+              <div className="text-red-500 mb-4">
+                {errorMessage}
+              </div>
+            )}
+
+            {/* Sign In Button */}
+            <button type="submit" className="w-full py-3 mb-4 bg-primary hover:bg-primary-dark text-white rounded-lg font-semibold">
+              Sign in
+            </button>
+
+            {/* Sign Up Link */}
+            <div className="text-center">
+              <p className="text-sm">
+                Don't have an account?
+                <Link to="/signup" className="text-primary hover:underline">Sign up</Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
