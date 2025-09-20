@@ -25,13 +25,19 @@ const LoginTwo = () => {
       const data = await response.json();
 
       if (response.ok) {
-        const token = data.token; // Ensure this matches your API response
+        // Handle successful login, such as storing token or redirecting
+        console.log("Login successful:", data);
+
+        const token = data.token; // Make sure 'data.token' matches the actual response key
         if (token) {
           localStorage.setItem("authToken", token);
           await refreshUser();
+          console.log("Token saved to localStorage:", token);
         }
+
         navigate("/home");
       } else {
+        // Show error message if login failed
         setErrorMessage(data.message || "Login failed. Please try again.");
       }
     } catch (error) {

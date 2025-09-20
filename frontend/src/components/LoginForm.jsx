@@ -26,14 +26,21 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (response.ok) {
-        const { token, userId } = data;
+        // Handle successful login, such as storing token or redirecting
+
+        console.log("Login successful:", data);
+        const { token, userId } = data;// Make sure 'data.token' matches the actual response key
         if (token) {
           localStorage.setItem("authToken", token);
           localStorage.setItem("userId", userId);
           await refreshUser();
+          console.log("Token saved to localStorage:", token);
         }
+
         navigate("/home");
+
       } else {
+        // Show error message if login failed
         setErrorMessage(data.message || "Login failed. Please try again.");
       }
     } catch (error) {
